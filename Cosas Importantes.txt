@@ -1,0 +1,3 @@
+poner el visual de x64 a x86
+
+using namespace glm
