@@ -64,10 +64,6 @@ void Poliespiral::render(Camera const & cam)
 Dragon::Dragon(GLuint numVert)
 {
 	mesh = Mesh::generaDragon(numVert);
-	
-	//glm::translate(mesh, dvec3(-40, -170, 0));
-
-	//glm::scale(mesh, dvec3(40, 40, 40));
 }
 
 Dragon::~Dragon()
@@ -82,6 +78,31 @@ void Dragon::render(Camera const & cam)
 		uploadMvM(cam.getViewMat());
 		glColor3d(0.0, 0.0, 1.0);
 		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+TrianguloRGB::TrianguloRGB(GLdouble r)
+{
+	mesh = Mesh::generaTrianguloRGB(r);
+}
+
+TrianguloRGB::~TrianguloRGB()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void TrianguloRGB::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices		//glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
+		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
 		mesh->render();
 		glLineWidth(1);
 	}

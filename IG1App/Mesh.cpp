@@ -124,3 +124,29 @@ Mesh * Mesh::generaDragon(GLuint numVert)
 
 //-------------------------------------------------------------------------
 
+Mesh * Mesh::generaTrianguloRGB(GLdouble r)
+{
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLES;
+	m->numVertices = r;
+
+	m->vertices = new dvec3[m->numVertices];
+
+	double x = 0, y = 0;
+
+	double ang = 330; //Para que salga hacia arriba
+
+	double angA = 120;
+
+	for (int i = 0; i < 3; i++) {
+		
+		x = 0 + r * cos(radians(ang + angA * i));
+		y = 0 + r * sin(radians(ang + angA * i));
+		
+		m->vertices[i] = dvec3(x, y, 0);
+	}
+
+	return m;
+}
+
+//-------------------------------------------------------------------------

@@ -18,9 +18,24 @@ void Scene::init()
 
   // Graphics objects (entities) of the scene
   //grObjects.push_back(new EjesRGB(200.0)); //crea los ejes de la escena
-  //grObjects.push_back(new Poliespiral(dvec2(0,0), 0, 160, 1, 1, 50)); //Ejercicio 1
-  //grObjects.push_back(new Poliespiral(dvec2(0,0), 0, 72, 30, 0.001, 6)); //Ejercicio 1
-	//grObjects.push_back(scale(new Dragon(3000)), dvec3(40, 40, 40)); //Ejercicio 2
+  
+  //Ejercicio 1
+  /*
+  grObjects.push_back(new Poliespiral(dvec2(0,0), 0, 160, 1, 1, 50));
+  grObjects.push_back(new Poliespiral(dvec2(0,0), 0, 72, 30, 0.001, 6)); 
+  */
+  
+  //Ejercicio 2
+  /*
+  grObjects.push_back(new Dragon(3000)); //Ejercicio 2
+  grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(40, 40, 40)));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-40, -170, 40))); //Este no va
+  */
+
+  //Ejercicio 3
+  
+  grObjects.push_back(new TrianguloRGB(100));
+  
 }
 //-------------------------------------------------------------------------
 

@@ -65,4 +65,14 @@ public:
 
 //-------------------------------------------------------------------------
 
+class TrianguloRGB : public Entity
+{
+public:
+	TrianguloRGB(GLdouble r);
+	~TrianguloRGB();
+	virtual void render(Camera const& cam);
+};
+
+//-------------------------------------------------------------------------
+
 #endif //_H_Entities_H_
