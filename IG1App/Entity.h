@@ -73,6 +73,14 @@ public:
 	virtual void render(Camera const& cam);
 };
 
+class RectanguloRGB : public Entity
+{
+public:
+	RectanguloRGB(GLdouble w, GLdouble h);
+	~RectanguloRGB();
+	virtual void render(Camera const& cam);
+};
+
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

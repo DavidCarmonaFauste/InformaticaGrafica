@@ -15,6 +15,8 @@ public:
 	static Mesh* generaPoliespiral(glm::dvec2 verIni, GLdouble angIni, GLdouble incrAng, GLdouble ladoIni, GLdouble incrLado, GLuint numVert);
 	static Mesh* generaDragon(GLuint numVert);
 	static Mesh* generaTrianguloRGB(GLdouble r);
+	static Mesh* generaRectangulo(GLdouble w, GLdouble h);
+	static Mesh* generaRectanguloRGB(GLdouble w, GLdouble h);
 
 	Mesh(void) { };
 	~Mesh(void);

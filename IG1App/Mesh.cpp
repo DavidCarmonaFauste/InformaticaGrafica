@@ -134,7 +134,7 @@ Mesh * Mesh::generaTrianguloRGB(GLdouble r)
 
 	double x = 0, y = 0;
 
-	double ang = 330; //Para que salga hacia arriba
+	double ang = 90; //Para que salga hacia arriba, y se creen en el orden
 
 	double angA = 120;
 
@@ -145,6 +145,53 @@ Mesh * Mesh::generaTrianguloRGB(GLdouble r)
 		
 		m->vertices[i] = dvec3(x, y, 0);
 	}
+
+	m->colors = new dvec4[m->numVertices];
+
+	m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0); //Rojo
+	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0); //Verde
+	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0); //Azul
+
+	return m;
+}
+
+Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h)
+{
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLE_STRIP;
+	m->numVertices = 4;
+
+	m->vertices = new dvec3[m->numVertices];
+	//m->colors = new dvec4[m->numVertices];
+
+	double x = 0, y = 0;
+
+	double ang = 90; //Para que salga hacia arriba, y se creen en el orden
+
+	double angA = 120;
+
+	m->vertices[0] = dvec3(0, 0, 0); //V0
+	m->vertices[2] = dvec3(w, 0, 0); //V2
+	m->vertices[1] = dvec3(0, -h, 0); // V1
+	
+	//m->vertices[1] = dvec3(0, -h, 0); // V1
+	//m->vertices[2] = dvec3(w, 0, 0); //V2
+	m->vertices[3] = dvec3(w, -h, 0); // V3
+
+
+	return m;
+}
+
+Mesh * Mesh::generaRectanguloRGB(GLdouble w, GLdouble h)
+{
+	Mesh* m = generaRectangulo(w, h);
+
+	m->colors = new dvec4[m->numVertices];
+
+	m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0); //Rojo
+	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0); //Verde
+	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0); //Azul
+	m->colors[3] = dvec4(1.0, 1.0, 1.0, 1.0); //Blanco
 
 	return m;
 }

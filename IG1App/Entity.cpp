@@ -101,8 +101,32 @@ void TrianguloRGB::render(Camera const & cam)
 		glColor3d(0.0, 0.0, 1.0);
 		glLineWidth(2);
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices		//glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices
+		//glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
 		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+RectanguloRGB::RectanguloRGB(GLdouble w, GLdouble h)
+{
+	mesh = Mesh::generaRectanguloRGB(w,h);
+
+}
+
+RectanguloRGB::~RectanguloRGB()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void RectanguloRGB::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
 		mesh->render();
 		glLineWidth(1);
 	}
