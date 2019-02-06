@@ -31,8 +31,8 @@ void Scene::init()
   
   /*
   grObjects.push_back(new Dragon(3000)); //Ejercicio 2
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-40, -170, 0)));
   grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(40, 40, 40)));
-  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-40, -170, 0))); //Este no va
   */
 
   //Ejercicio 3
@@ -41,10 +41,22 @@ void Scene::init()
 
   //Ejercicio 4
 
-  //grObjects.push_back(new RectanguloRGB(200, 100));
-  //grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(25), dvec3(0, 0, 1))); //No va
+  /*
+  grObjects.push_back(new RectanguloRGB(200, 100));
+  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(-25.0), dvec3(0, 0, 1))); //No va
+  */
 
   //Ejercicio 5
+	
+  
+  grObjects.push_back(new Poliespiral(dvec2(0, 0), 0, 160, 1, 1, 50));
+  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(-25.0), dvec3(0, 0, 1))); //No va
+  grObjects.push_back(new Dragon(3000)); //Ejercicio 2
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-40, -170, 10)));
+  grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(40, 40, 40)));
+  grObjects.push_back(new TrianguloRGB(100));
+  grObjects.push_back(new RectanguloRGB(200, 100));
+  
 
 }
 //-------------------------------------------------------------------------

@@ -162,20 +162,10 @@ Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h)
 	m->numVertices = 4;
 
 	m->vertices = new dvec3[m->numVertices];
-	//m->colors = new dvec4[m->numVertices];
-
-	double x = 0, y = 0;
-
-	double ang = 90; //Para que salga hacia arriba, y se creen en el orden
-
-	double angA = 120;
 
 	m->vertices[0] = dvec3(0, 0, 0); //V0
 	m->vertices[2] = dvec3(w, 0, 0); //V2
 	m->vertices[1] = dvec3(0, -h, 0); // V1
-	
-	//m->vertices[1] = dvec3(0, -h, 0); // V1
-	//m->vertices[2] = dvec3(w, 0, 0); //V2
 	m->vertices[3] = dvec3(w, -h, 0); // V3
 
 

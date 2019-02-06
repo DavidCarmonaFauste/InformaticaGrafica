@@ -103,7 +103,7 @@ void TrianguloRGB::render(Camera const & cam)
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices
 		//glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
-		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
+		glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
 		mesh->render();
 		glLineWidth(1);
 	}
