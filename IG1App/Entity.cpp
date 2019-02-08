@@ -7,6 +7,10 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
+void Entity::update()
+{
+}
+
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
 { 
 	dmat4 aMat = modelViewMat * modelMat;
@@ -130,4 +134,87 @@ void RectanguloRGB::render(Camera const & cam)
 		mesh->render();
 		glLineWidth(1);
 	}
+}
+
+generaEstrella3D::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
+{
+	mesh = Mesh::generaEstrella3D(re, np, h);
+
+}
+
+generaEstrella3D::~generaEstrella3D()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void generaEstrella3D::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+generaContCubo::generaContCubo(GLdouble l)
+{
+	mesh = Mesh::generaContCubo(l);
+}
+
+generaContCubo::~generaContCubo()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void generaContCubo::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+TrianguloAnimado::TrianguloAnimado(GLdouble r)
+{
+	mesh = Mesh::generaTrianguloRGB(r);
+}
+
+TrianguloAnimado::~TrianguloAnimado()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void TrianguloAnimado::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+void TrianguloAnimado::update()
+{
+	this->setModelMat(translate(this->getModelMat(), dvec3(sin(radians(15.0)), cos(radians(15.0)), 0)));
+	this->setModelMat(rotate(this->getModelMat(), radians(15.0), dvec3(0, 0, 1)));
+	this->setModelMat(translate(this->getModelMat(), dvec3(-sin(radians(15.0)), -cos(radians(15.0)), 0)));
+
+
+	x = 50 * cos(radians(15.0));
+	y = 50 * sin(radians(15.0));
+
+	this->setModelMat(translate(this->getModelMat(), dvec3(x,y, 0)));
+
 }

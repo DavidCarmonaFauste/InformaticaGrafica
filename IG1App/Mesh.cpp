@@ -171,7 +171,7 @@ Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h)
 
 	return m;
 }
-
+//-------------------------------------------------------------------------
 Mesh * Mesh::generaRectanguloRGB(GLdouble w, GLdouble h)
 {
 	Mesh* m = generaRectangulo(w, h);
@@ -182,6 +182,79 @@ Mesh * Mesh::generaRectanguloRGB(GLdouble w, GLdouble h)
 	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0); //Verde
 	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0); //Azul
 	m->colors[3] = dvec4(1.0, 1.0, 1.0, 1.0); //Blanco
+
+	return m;
+}
+//-------------------------------------------------------------------------
+Mesh * Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
+{
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLE_FAN;
+	m->numVertices = 2*np+2;
+
+	m->vertices = new dvec3[m->numVertices];
+
+	double x = 0, y = 0, z = 0;
+
+	double ang = 90; //Para que salga hacia arriba, y se creen en el orden
+
+	double angA = 30;
+
+	m->vertices[0] = dvec3(x, y, z);
+
+	bool grande = false;
+
+	for (int i = 1; i < (2 * np + 1); i++) {
+
+		x = 0 + re * cos(radians(ang + angA * i));
+		y = 0 + re * sin(radians(ang + angA * i));
+
+		if (!grande)
+		{
+			x = x / 2;
+			y = y / 2;
+
+			grande = true;
+		}
+
+		else
+		{
+			grande = false;
+		}
+
+		m->vertices[i] = dvec3(x, y, h);
+	}
+
+	m->vertices[m->numVertices-1] = m->vertices[1];
+
+	/*m->colors = new dvec4[m->numVertices];
+
+	m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0); //Rojo
+	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0); //Verde
+	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0); //Azul*/
+
+	return m;
+}
+
+Mesh * Mesh::generaContCubo(GLdouble l)
+{
+	Mesh* m = new Mesh();
+	m->primitive = GL_TRIANGLE_STRIP;
+	m->numVertices = 10;
+
+	m->vertices = new dvec3[m->numVertices];
+
+	m->vertices[0] = dvec3(-l/2, l / 2, l / 2);
+	m->vertices[1] = dvec3(-l  / 2, -l/ 2, l / 2);
+	m->vertices[2] = dvec3(l / 2, l / 2, l / 2);
+	m->vertices[3] = dvec3(l / 2, -l / 2, l / 2);
+	m->vertices[4] = dvec3(l / 2, l / 2, -l / 2);
+	m->vertices[5] = dvec3(l / 2, -l / 2, -l / 2);
+	m->vertices[6] = dvec3(-l / 2, l / 2, -l / 2);
+	m->vertices[7] = dvec3(-l / 2, -l / 2, -l / 2);
+	m->vertices[8] = m->vertices[0];
+	m->vertices[9] = m->vertices[1];
+
 
 	return m;
 }

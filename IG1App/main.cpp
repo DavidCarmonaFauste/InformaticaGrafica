@@ -116,6 +116,10 @@ void key(unsigned char key, int x, int y)
   case 'o':
 	camera.set2D();
 	break;
+  case 'u':
+	  scene.update();
+	  break;
+
   default:
 	need_redisplay = false;
     break;

@@ -19,6 +19,8 @@ public:
 
 	virtual void render(Camera const& cam) = 0;
 
+	virtual void update();
+
 	// modeling matrix
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
@@ -73,6 +75,17 @@ public:
 	virtual void render(Camera const& cam);
 };
 
+class TrianguloAnimado : public Entity
+{
+public:
+	TrianguloAnimado(GLdouble r);
+	~TrianguloAnimado();
+	virtual void render(Camera const& cam);
+	virtual void update();
+private:
+	double x, y = 0;
+};
+
 class RectanguloRGB : public Entity
 {
 public:
@@ -82,5 +95,21 @@ public:
 };
 
 //-------------------------------------------------------------------------
+
+class generaEstrella3D : public Entity
+{
+public:
+	generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
+	~generaEstrella3D();
+	virtual void render(Camera const& cam);
+};
+
+class generaContCubo : public Entity
+{
+public:
+	generaContCubo(GLdouble l);
+	~generaContCubo();
+	virtual void render(Camera const& cam);
+};
 
 #endif //_H_Entities_H_

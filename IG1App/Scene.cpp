@@ -48,7 +48,7 @@ void Scene::init()
 
   //Ejercicio 5
 	
-  
+ /*
   grObjects.push_back(new Poliespiral(dvec2(0, 0), 0, 160, 1, 1, 50));
   grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(-25.0), dvec3(0, 0, 1))); //No va
   grObjects.push_back(new Dragon(3000)); //Ejercicio 2
@@ -56,7 +56,19 @@ void Scene::init()
   grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(40, 40, 40)));
   grObjects.push_back(new TrianguloRGB(100));
   grObjects.push_back(new RectanguloRGB(200, 100));
-  
+  */
+
+  //Ejercicio 6
+
+  //grObjects.push_back(new generaEstrella3D(100, 6, 50));
+
+  //Ejercicio 7
+  //grObjects.push_back(new generaContCubo(50));
+
+  //Animacion
+
+	grObjects.push_back(new TrianguloAnimado(50));
+	//grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(50, 0, 0)));
 
 }
 //-------------------------------------------------------------------------
@@ -76,6 +88,13 @@ void Scene::render(Camera const& cam)
 	for (Entity* el: grObjects)
 	{
 		el->render(cam);
+	}
+}
+void Scene::update()
+{
+	for (Entity* el : grObjects)
+	{
+		el->update();
 	}
 }
 //-------------------------------------------------------------------------
