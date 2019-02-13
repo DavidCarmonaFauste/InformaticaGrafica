@@ -63,13 +63,15 @@ void Scene::init()
   //grObjects.push_back(new generaEstrella3D(100, 6, 50));
 
   //Ejercicio 7
-  //grObjects.push_back(new generaContCubo(50));
+  grObjects.push_back(new generaContCubo(50));
 
   //Animacion
 
-	grObjects.push_back(new TrianguloAnimado(50));
+	//grObjects.push_back(new TrianguloAnimado(50));
 	//grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(50, 0, 0)));
 
+  //Ejercicio 8
+  grObjects.push_back(new generaContCubo(50));
 }
 //-------------------------------------------------------------------------
 

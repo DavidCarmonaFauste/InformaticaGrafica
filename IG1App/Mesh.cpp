@@ -227,12 +227,6 @@ Mesh * Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
 
 	m->vertices[m->numVertices-1] = m->vertices[1];
 
-	/*m->colors = new dvec4[m->numVertices];
-
-	m->colors[0] = dvec4(1.0, 0.0, 0.0, 1.0); //Rojo
-	m->colors[1] = dvec4(0.0, 1.0, 0.0, 1.0); //Verde
-	m->colors[2] = dvec4(0.0, 0.0, 1.0, 1.0); //Azul*/
-
 	return m;
 }
 
@@ -254,8 +248,7 @@ Mesh * Mesh::generaContCubo(GLdouble l)
 	m->vertices[7] = dvec3(-l / 2, -l / 2, -l / 2);
 	m->vertices[8] = m->vertices[0];
 	m->vertices[9] = m->vertices[1];
-
-
+	
 	return m;
 }
 

@@ -156,19 +156,41 @@ void generaEstrella3D::render(Camera const & cam)
 		glLineWidth(2);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
 		mesh->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(180.0), dvec3(0, 1, 0)));
+		uploadMvM(cam.getViewMat());
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		mesh->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(-180.0), dvec3(0, 1, 0)));
+		//mesh->render();
+
 		glLineWidth(1);
 	}
+}
+
+void generaEstrella3D::update()
+{
+	this->setModelMat(translate(this->getModelMat(), dvec3(sin(radians(15.0)), cos(radians(15.0)), 0)));
+	this->setModelMat(rotate(this->getModelMat(), radians(15.0), dvec3(0, 0, 1)));
+	this->setModelMat(rotate(this->getModelMat(), radians(15.0), dvec3(0, 1, 0)));
+	this->setModelMat(translate(this->getModelMat(), dvec3(-sin(radians(15.0)), -cos(radians(15.0)), 0)));
 }
 
 generaContCubo::generaContCubo(GLdouble l)
 {
 	mesh = Mesh::generaContCubo(l);
+	mesh2 = Mesh::generaRectangulo(2 * l, 3 * l);
+	this->setModelMat(translate(this->getModelMat(), dvec3(sin(radians(15.0)), cos(radians(15.0)), 0)));
+
 }
 
 generaContCubo::~generaContCubo()
 {
 	delete mesh;
+	delete mesh2;
 	mesh = nullptr;
+	mesh2 = nullptr;
 }
 
 void generaContCubo::render(Camera const & cam)
@@ -179,6 +201,7 @@ void generaContCubo::render(Camera const & cam)
 		glLineWidth(2);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
 		mesh->render();
+		mesh2->render();
 		glLineWidth(1);
 	}
 }

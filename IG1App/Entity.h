@@ -102,6 +102,7 @@ public:
 	generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
 	~generaEstrella3D();
 	virtual void render(Camera const& cam);
+	virtual void update();
 };
 
 class generaContCubo : public Entity
@@ -110,6 +111,10 @@ public:
 	generaContCubo(GLdouble l);
 	~generaContCubo();
 	virtual void render(Camera const& cam);
+
+protected:
+	Mesh* mesh2 = nullptr;   // surface mesh
+
 };
 
 #endif //_H_Entities_H_
