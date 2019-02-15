@@ -156,6 +156,11 @@ void generaEstrella3D::render(Camera const & cam)
 {
 	if (mesh != nullptr) {
 
+		aux = this->getModelMat();
+
+		this->setModelMat(rotate(aux, radians(ang1), dvec3(0, 1, 0)));
+		this->setModelMat(rotate(this->getModelMat(), radians(ang2), dvec3(0, 0, 1)));
+
 		uploadMvM(cam.getViewMat());
 		glColor3d(0.0, 0.0, 1.0);
 		glLineWidth(2);
