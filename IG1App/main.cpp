@@ -25,12 +25,17 @@ Camera camera(&viewPort);
 // Graphics objects of the scene
 Scene scene;   
 
+bool animation = false;
+
+GLuint last_update_tick = 0;
+
 //----------- Callbacks ----------------------------------------------------
 
 void display();
 void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
+void update();
 
 //-------------------------------------------------------------------------
 
@@ -59,7 +64,8 @@ int main(int argc, char *argv[])
   glutKeyboardFunc(key);		//eventos de teclado
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);		//como se dibuja el contenido de la ventana
- 
+  glutIdleFunc(update);
+
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
 
@@ -117,7 +123,10 @@ void key(unsigned char key, int x, int y)
 	camera.set2D();
 	break;
   case 'u':
-	  scene.update();
+	  if (animation)
+		  animation = false;
+	  else
+		  animation = true;
 	  break;
 
   default:
@@ -157,3 +166,17 @@ void specialKey(int key, int x, int y)
 }
 //-------------------------------------------------------------------------
 
+void update()
+{	
+	if (glutGet(GLUT_ELAPSED_TIME) > (last_update_tick + 1000))
+	{
+		if (animation)
+		{
+			cout << glutGet(GLUT_ELAPSED_TIME);
+			scene.update();
+			glutPostRedisplay();
+			last_update_tick = glutGet(GLUT_ELAPSED_TIME);
+		}
+
+	}
+}

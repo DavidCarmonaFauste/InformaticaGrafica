@@ -63,7 +63,7 @@ void Scene::init()
   //grObjects.push_back(new generaEstrella3D(100, 6, 50));
 
   //Ejercicio 7
-  grObjects.push_back(new generaContCubo(50));
+  //grObjects.push_back(new generaContCubo(50));
 
   //Animacion
 
@@ -71,7 +71,16 @@ void Scene::init()
 	//grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(50, 0, 0)));
 
   //Ejercicio 8
-  grObjects.push_back(new generaContCubo(50));
+  //grObjects.push_back(new generaCajaSinTapa(50)); //Cubo con suelo
+
+  //Escena 3D
+  grObjects.push_back(new generaCajaSinTapa(50)); //Cubo con suelo
+  grObjects.push_back(new RectanguloRGB(200, 100));
+  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(-90.0), dvec3(1, 0, 0))); //No va
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-100, 50, -30)));
+  grObjects.push_back(new generaEstrella3D(100, 6, 50));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(0, 75, 0)));
+  grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(0.3, 0.3, 0.3)));
 }
 //-------------------------------------------------------------------------
 
@@ -98,6 +107,10 @@ void Scene::update()
 	{
 		el->update();
 	}
+}
+void Scene::update(GLuint timeElapsed)
+{
+	update();
 }
 //-------------------------------------------------------------------------
 

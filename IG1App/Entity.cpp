@@ -11,6 +11,10 @@ void Entity::update()
 {
 }
 
+void Entity::update(GLuint timeElapsed)
+{
+}
+
 void Entity::uploadMvM(dmat4 const& modelViewMat) const
 { 
 	dmat4 aMat = modelViewMat * modelMat;
@@ -151,6 +155,7 @@ generaEstrella3D::~generaEstrella3D()
 void generaEstrella3D::render(Camera const & cam)
 {
 	if (mesh != nullptr) {
+
 		uploadMvM(cam.getViewMat());
 		glColor3d(0.0, 0.0, 1.0);
 		glLineWidth(2);
@@ -166,31 +171,27 @@ void generaEstrella3D::render(Camera const & cam)
 		//mesh->render();
 
 		glLineWidth(1);
+
+		this->setModelMat(aux);
+
 	}
 }
 
 void generaEstrella3D::update()
 {
-	this->setModelMat(translate(this->getModelMat(), dvec3(sin(radians(15.0)), cos(radians(15.0)), 0)));
-	this->setModelMat(rotate(this->getModelMat(), radians(15.0), dvec3(0, 0, 1)));
-	this->setModelMat(rotate(this->getModelMat(), radians(15.0), dvec3(0, 1, 0)));
-	this->setModelMat(translate(this->getModelMat(), dvec3(-sin(radians(15.0)), -cos(radians(15.0)), 0)));
+	ang1 += 15;
+	ang2 += 15;
 }
 
 generaContCubo::generaContCubo(GLdouble l)
 {
 	mesh = Mesh::generaContCubo(l);
-	mesh2 = Mesh::generaRectangulo(2 * l, 3 * l);
-	this->setModelMat(translate(this->getModelMat(), dvec3(sin(radians(15.0)), cos(radians(15.0)), 0)));
-
 }
 
 generaContCubo::~generaContCubo()
 {
 	delete mesh;
-	delete mesh2;
 	mesh = nullptr;
-	mesh2 = nullptr;
 }
 
 void generaContCubo::render(Camera const & cam)
@@ -201,7 +202,6 @@ void generaContCubo::render(Camera const & cam)
 		glLineWidth(2);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
 		mesh->render();
-		mesh2->render();
 		glLineWidth(1);
 	}
 }
@@ -240,4 +240,41 @@ void TrianguloAnimado::update()
 
 	this->setModelMat(translate(this->getModelMat(), dvec3(x,y, 0)));
 
+}
+
+generaCajaSinTapa::generaCajaSinTapa(GLdouble l)
+{
+	l_ = l;
+	mesh = Mesh::generaContCubo(l);
+	mesh2 = Mesh::generaRectanguloRGB(l, l);
+}
+
+generaCajaSinTapa::~generaCajaSinTapa()
+{
+	delete mesh;
+	delete mesh2;
+	mesh = nullptr;
+	mesh2 = nullptr;
+}
+
+void generaCajaSinTapa::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		mesh->render();
+
+		this->setModelMat(translate(this->getModelMat(), dvec3(-0.5 * l_, -l_/2, -l_ / 2)));
+		this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(1, 0, 0)));
+		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
+		uploadMvM(cam.getViewMat());
+
+		mesh2->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+		this->setModelMat(translate(this->getModelMat(), dvec3(0.5 * l_, l_/2, l_/2)));
+
+		glLineWidth(1);
+	}
 }

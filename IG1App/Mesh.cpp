@@ -234,7 +234,7 @@ Mesh * Mesh::generaContCubo(GLdouble l)
 {
 	Mesh* m = new Mesh();
 	m->primitive = GL_TRIANGLE_STRIP;
-	m->numVertices = 10;
+	m->numVertices = 12;
 
 	m->vertices = new dvec3[m->numVertices];
 
@@ -248,8 +248,16 @@ Mesh * Mesh::generaContCubo(GLdouble l)
 	m->vertices[7] = dvec3(-l / 2, -l / 2, -l / 2);
 	m->vertices[8] = m->vertices[0];
 	m->vertices[9] = m->vertices[1];
+	//m->vertices[10] = m->vertices[3];
+	//m->vertices[11] = m->vertices[5];
+
 	
 	return m;
+}
+
+Mesh * Mesh::generaCajaSinTapa(GLdouble l)
+{
+	return nullptr;
 }
 
 //-------------------------------------------------------------------------

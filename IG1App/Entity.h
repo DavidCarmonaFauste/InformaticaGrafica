@@ -20,7 +20,7 @@ public:
 	virtual void render(Camera const& cam) = 0;
 
 	virtual void update();
-
+	void update(GLuint timeElapsed);
 	// modeling matrix
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
@@ -103,6 +103,10 @@ public:
 	~generaEstrella3D();
 	virtual void render(Camera const& cam);
 	virtual void update();
+private:
+	GLdouble ang1 = 0;
+	GLdouble ang2 = 0;
+	dmat4 aux;
 };
 
 class generaContCubo : public Entity
@@ -111,10 +115,18 @@ public:
 	generaContCubo(GLdouble l);
 	~generaContCubo();
 	virtual void render(Camera const& cam);
+};
+
+class generaCajaSinTapa : public Entity
+{
+public:
+	generaCajaSinTapa(GLdouble l);
+	~generaCajaSinTapa();
+	virtual void render(Camera const& cam);
 
 protected:
-	Mesh* mesh2 = nullptr;   // surface mesh
-
+	Mesh* mesh2 = nullptr;
+	GLdouble l_;
 };
 
 #endif //_H_Entities_H_
