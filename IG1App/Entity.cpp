@@ -184,8 +184,8 @@ void generaEstrella3D::render(Camera const & cam)
 
 void generaEstrella3D::update()
 {
-	ang1 += 15;
-	ang2 += 15;
+	ang1 += 3;
+	ang2 += 3;
 }
 
 generaContCubo::generaContCubo(GLdouble l)

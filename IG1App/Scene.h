@@ -18,13 +18,15 @@ class Scene
 public:
     Scene() { };
 	~Scene();
-    void init(); 
+    void init();
+	void init2();
 
     void render(Camera const& cam);
 
 	void update();
 	void update(GLuint timeElapsed);
 
+	void clear();
 protected:
 
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene

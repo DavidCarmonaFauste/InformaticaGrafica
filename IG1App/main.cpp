@@ -23,9 +23,11 @@ Viewport viewPort(800, 600);
 Camera camera(&viewPort);    
 
 // Graphics objects of the scene
-Scene scene;   
+Scene scene;
+//Scene scene2;
 
 bool animation = false;
+bool sceneBool = true;
 
 GLuint last_update_tick = 0;
 
@@ -128,7 +130,20 @@ void key(unsigned char key, int x, int y)
 	  else
 		  animation = true;
 	  break;
+  case '3':
+	  scene.clear();
 
+	  if (sceneBool)
+	  {
+		  scene.init2();
+		  sceneBool = false;
+	  }
+	  else
+	  {
+		 scene.init();
+		 sceneBool = true;
+	  }
+	  glutPostRedisplay();
   default:
 	need_redisplay = false;
     break;
@@ -168,11 +183,11 @@ void specialKey(int key, int x, int y)
 
 void update()
 {	
-	if (glutGet(GLUT_ELAPSED_TIME) > (last_update_tick + 1000))
+	if (glutGet(GLUT_ELAPSED_TIME) > (last_update_tick + 16))
 	{
 		if (animation)
 		{
-			cout << glutGet(GLUT_ELAPSED_TIME);
+			//cout << glutGet(GLUT_ELAPSED_TIME);
 			scene.update();
 			glutPostRedisplay();
 			last_update_tick = glutGet(GLUT_ELAPSED_TIME);
