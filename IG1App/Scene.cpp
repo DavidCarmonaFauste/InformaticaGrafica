@@ -11,8 +11,8 @@ void Scene::init()
 { // OpenGL basic setting
   glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
-     
-  // lights
+  glEnable(GL_TEXTURE_2D);
+	  // lights
   // textures  
   // meshes
 
@@ -74,7 +74,7 @@ void Scene::init()
   //grObjects.push_back(new generaCajaSinTapa(50)); //Cubo con suelo
 
   //Escena 3D
-  grObjects.push_back(new generaCajaSinTapa(50)); //Cubo con suelo
+  /*grObjects.push_back(new generaCajaSinTapa(50)); //Cubo con suelo
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-200, 0, -300)));
   grObjects.push_back(new RectanguloRGB(600, 800));
   grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(-90.0), dvec3(1, 0, 0))); //No va
@@ -82,7 +82,15 @@ void Scene::init()
   grObjects.push_back(new generaEstrella3D(100, 6, 50));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-200, 75, -300)));
  // grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(0, 75, 0)));
-  grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(0.3, 0.3, 0.3)));
+  grObjects.back()->setModelMat(scale(grObjects.back()->getModelMat(), dvec3(0.3, 0.3, 0.3)));*/
+
+  //grObjects.push_back(new RectangleTex(50, 80)); //Cubo con suelo
+
+  //grObjects.push_back(new RectangleTexCor(50, 80, 14, 14)); //Cubo con suelo
+
+  grObjects.push_back(new generaEstrella3DTex(100, 6, 50));
+
+
 }
 
 void Scene::init2()

@@ -20,6 +20,9 @@ public:
 	static Mesh* generaEstrella3D(GLdouble re, GLdouble np, GLdouble h);
 	static Mesh* generaContCubo(GLdouble l);
 	static Mesh* generaCajaSinTapa(GLdouble l);
+	static Mesh* generateRectangleTex(GLdouble w, GLdouble h);
+	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	static Mesh* generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h);
 	Mesh(void) { };
 	~Mesh(void);
 	virtual void render();
@@ -34,6 +37,7 @@ protected:
 
 	glm::dvec3* vertices = nullptr;  // vertex array	VECTOR DE 3 COMPONENTES DOUBLE
 	glm::dvec4* colors = nullptr;    // color array		VECTOR DE 3 COMPONENETES DOUBLE
+	glm::dvec2* textureData = nullptr; //Coordenadas de texturas
 };
 
 //-------------------------------------------------------------------------

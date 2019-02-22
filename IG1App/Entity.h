@@ -7,6 +7,7 @@
 
 #include "Camera.h"
 #include "Mesh.h"
+#include "Texture.h"
 
 using namespace glm;
 //-------------------------------------------------------------------------
@@ -30,12 +31,28 @@ protected:
 
 	Mesh* mesh = nullptr;   // surface mesh
 	glm::dmat4 modelMat;    // modeling matrix
-
-	// transfers modelViewMat to the GPU
+	Texture texture;    // w, h, id  
+					   // transfers modelViewMat to the GPU
 	virtual void uploadMvM(glm::dmat4 const& modelViewMat) const;
 };
 
 //-------------------------------------------------------------------------
+
+class RectangleTex : public Entity
+{
+public:
+	RectangleTex(GLdouble w, GLdouble h);
+	~RectangleTex();
+	void render(Camera const& cam);
+};
+
+class RectangleTexCor : public Entity
+{
+public:
+	RectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
+	~RectangleTexCor();
+	void render(Camera const& cam);
+};
 
 class EjesRGB : public Entity 
 {
@@ -129,4 +146,16 @@ protected:
 	GLdouble l_;
 };
 
+class generaEstrella3DTex : public Entity
+{
+public:
+	generaEstrella3DTex(GLdouble re, GLdouble np, GLdouble h);
+	~generaEstrella3DTex();
+	virtual void render(Camera const& cam);
+	virtual void update();
+private:
+	GLdouble ang1 = 0;
+	GLdouble ang2 = 0;
+	dmat4 aux;
+};
 #endif //_H_Entities_H_

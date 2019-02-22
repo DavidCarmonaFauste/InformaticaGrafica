@@ -20,11 +20,17 @@ void Mesh::render()
       glEnableClientState(GL_COLOR_ARRAY);
       glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate, stride, pointer 
     }
+	if (textureData != nullptr)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glTexCoordPointer(2, GL_DOUBLE, 0, textureData);
+	}
 	
     glDrawArrays(primitive, 0, numVertices);   // primitive graphic, first index and number of elements to be rendered
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
   }
 }
 //-------------------------------------------------------------------------
@@ -163,10 +169,10 @@ Mesh * Mesh::generaRectangulo(GLdouble w, GLdouble h)
 
 	m->vertices = new dvec3[m->numVertices];
 
-	m->vertices[0] = dvec3(0, 0, 0); //V0
-	m->vertices[2] = dvec3(w, 0, 0); //V2
-	m->vertices[1] = dvec3(0, -h, 0); // V1
-	m->vertices[3] = dvec3(w, -h, 0); // V3
+	m->vertices[0] = dvec3(-w/2, h/2, 0); //V0
+	m->vertices[1] = dvec3(-w/2, -h/2, 0); // V1
+	m->vertices[2] = dvec3(w/2, h/2, 0); //V2
+	m->vertices[3] = dvec3(w/2, -h/2, 0); // V3
 
 
 	return m;
@@ -258,6 +264,78 @@ Mesh * Mesh::generaContCubo(GLdouble l)
 Mesh * Mesh::generaCajaSinTapa(GLdouble l)
 {
 	return nullptr;
+}
+
+Mesh * Mesh::generateRectangleTex(GLdouble w, GLdouble h)
+{
+	Mesh* m = generaRectangulo(w, h);
+	m->textureData = new dvec2[m->numVertices];
+	m->textureData[0] = dvec2(0, 1);
+	m->textureData[1] = dvec2(0, 0);
+	m->textureData[2] = dvec2(1, 1);
+	m->textureData[3] = dvec2(1, 0);
+	
+	return m;
+}
+
+Mesh * Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	Mesh* m = generaRectangulo(w, h);
+	m->textureData = new dvec2[m->numVertices];
+	m->textureData[0] = dvec2(0, rh);
+	m->textureData[1] = dvec2(0, 0);
+	m->textureData[2] = dvec2(rw, rh);
+	m->textureData[3] = dvec2(rw, 0);
+
+	return m;
+}
+
+Mesh * Mesh::generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h)
+{
+	Mesh* m = generaEstrella3D(r, nL, h);
+	m->textureData = new dvec2[m->numVertices];
+	m->textureData[0] = dvec2(0.5, 0.5);
+
+	//2*nl+2
+	/*
+	m->textureData[1] = dvec2(1, 0);
+	m->textureData[2] = dvec2(0, 0);
+	m->textureData[3] = dvec2(1, 1);
+	m->textureData[4] = dvec2(1, 0);
+	*/
+
+	double x = 0.5, y = 0.5;
+
+	double ang = 90; //Para que salga hacia arriba, y se creen en el orden
+
+	double angA = 30;
+
+	bool grande = false;
+
+	for (int i = 1; i < (2 * nL + 1); i++) {
+
+		x = 0 + 0.5 * cos(radians(ang + angA * i));
+		y = 0 + 0.5 * sin(radians(ang + angA * i));
+
+		if (!grande)
+		{
+			x = x / 2;
+			y = y / 2;
+
+			grande = true;
+		}
+
+		else
+		{
+			grande = false;
+		}
+
+		m->textureData[i] = dvec2(x, y);
+	}
+
+	m->textureData[m->numVertices - 1] = m->textureData[1];
+
+	return m;
 }
 
 //-------------------------------------------------------------------------

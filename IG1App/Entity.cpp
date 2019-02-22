@@ -283,3 +283,109 @@ void generaCajaSinTapa::render(Camera const & cam)
 		glLineWidth(1);
 	}
 }
+
+RectangleTex::RectangleTex(GLdouble w, GLdouble h)
+{
+	mesh = Mesh::generateRectangleTex(w, h);// con coord. de textura 
+	texture.load("..\\Bmps\\Zelda.bmp");  // cargamos la imagen 
+}
+
+RectangleTex::~RectangleTex()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void RectangleTex::render(Camera const& cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		texture.bind();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices
+		glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
+		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+RectangleTexCor::RectangleTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	mesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);// con coord. de textura 
+	texture.load("..\\Bmps\\baldosaC.bmp");  // cargamos la imagen 
+}
+
+RectangleTexCor::~RectangleTexCor()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void RectangleTexCor::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		texture.bind();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices
+		glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
+		GL_REPEAT;
+		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+generaEstrella3DTex::generaEstrella3DTex(GLdouble re, GLdouble np, GLdouble h)
+{
+	mesh = Mesh::generaEstrellaTexCor(re, np, h);
+	texture.load("..\\Bmps\\baldosaP.bmp");  // cargamos la imagen 
+}
+
+generaEstrella3DTex::~generaEstrella3DTex()
+{
+	delete mesh;
+	mesh = nullptr;
+}
+
+void generaEstrella3DTex::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+
+		aux = this->getModelMat();
+
+		this->setModelMat(rotate(aux, radians(ang1), dvec3(0, 1, 0)));
+		this->setModelMat(rotate(this->getModelMat(), radians(ang2), dvec3(0, 0, 1)));
+
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		texture.bind();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		mesh->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(180.0), dvec3(0, 1, 0)));
+		uploadMvM(cam.getViewMat());
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		mesh->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(-180.0), dvec3(0, 1, 0)));
+		//mesh->render();
+
+		glLineWidth(1);
+
+		this->setModelMat(aux);
+
+	}
+}
+
+void generaEstrella3DTex::update()
+{
+	ang1 += 3;
+	ang2 += 3;
+}
