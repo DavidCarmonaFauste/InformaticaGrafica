@@ -204,7 +204,7 @@ Mesh * Mesh::generaEstrella3D(GLdouble re, GLdouble np, GLdouble h)
 
 	double ang = 90; //Para que salga hacia arriba, y se creen en el orden
 
-	double angA = 30;
+	double angA = 180/np;
 
 	m->vertices[0] = dvec3(x, y, z);
 
@@ -335,6 +335,26 @@ Mesh * Mesh::generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h)
 
 	m->textureData[m->numVertices - 1] = m->textureData[1];
 
+	return m;
+}
+
+Mesh * Mesh::generaCajaTexCor(GLdouble l)
+{
+	Mesh* m = generaContCubo(l);
+	m->textureData = new dvec2[m->numVertices];
+	
+	m->textureData[0] = dvec2(0.0, 0.0);
+	m->textureData[1] = dvec2(1.0, 0.0);
+	m->textureData[2] = dvec2(0.0, 1.0);
+	m->textureData[3] = dvec2(1.0, 1.0);
+
+	m->textureData[4] = dvec2(0.0, 0.0);
+	m->textureData[5] = dvec2(1.0, 0.0);
+	m->textureData[6] = dvec2(0.0, 1.0);
+	m->textureData[7] = dvec2(1.0, 1.0);
+
+	m->textureData[8] = m->textureData[0];
+	m->textureData[9] = m->textureData[1];
 	return m;
 }
 

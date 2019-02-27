@@ -88,7 +88,12 @@ void Scene::init()
 
   //grObjects.push_back(new RectangleTexCor(50, 80, 14, 14)); //Cubo con suelo
 
-  grObjects.push_back(new generaEstrella3DTex(100, 6, 50));
+  //grObjects.push_back(new generaEstrella3DTex(100, 4, 50));
+
+  grObjects.push_back(new generaCajaTexCor(50));
+
+
+//grObjects.push_back(new generaCajaSinTapa(50));
 
 
 }

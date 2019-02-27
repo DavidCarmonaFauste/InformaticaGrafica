@@ -158,4 +158,17 @@ private:
 	GLdouble ang2 = 0;
 	dmat4 aux;
 };
+
+class generaCajaTexCor : public Entity
+{
+public:
+	generaCajaTexCor(GLdouble l);
+	~generaCajaTexCor();
+	virtual void render(Camera const& cam);
+
+protected:
+	Mesh* mesh2 = nullptr;
+	GLdouble l_;
+	Texture texture2;
+};
 #endif //_H_Entities_H_

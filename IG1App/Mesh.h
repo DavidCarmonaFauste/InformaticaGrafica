@@ -23,6 +23,8 @@ public:
 	static Mesh* generateRectangleTex(GLdouble w, GLdouble h);
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh);
 	static Mesh* generaEstrellaTexCor(GLdouble r, GLdouble nL, GLdouble h);
+	static Mesh* generaCajaTexCor(GLdouble l);
+
 	Mesh(void) { };
 	~Mesh(void);
 	virtual void render();

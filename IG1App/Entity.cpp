@@ -270,7 +270,7 @@ void generaCajaSinTapa::render(Camera const & cam)
 		glLineWidth(2);
 		mesh->render();
 
-		this->setModelMat(translate(this->getModelMat(), dvec3(-0.5 * l_, -l_/2, -l_ / 2)));
+		this->setModelMat(translate(this->getModelMat(), dvec3(0, -l_/2, 0)));
 		this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(1, 0, 0)));
 		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
 		uploadMvM(cam.getViewMat());
@@ -278,7 +278,7 @@ void generaCajaSinTapa::render(Camera const & cam)
 		mesh2->render();
 
 		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
-		this->setModelMat(translate(this->getModelMat(), dvec3(0.5 * l_, l_/2, l_/2)));
+		this->setModelMat(translate(this->getModelMat(), dvec3(0, l_/2, 0)));
 
 		glLineWidth(1);
 	}
@@ -388,4 +388,66 @@ void generaEstrella3DTex::update()
 {
 	ang1 += 3;
 	ang2 += 3;
+}
+
+generaCajaTexCor::generaCajaTexCor(GLdouble l)
+{
+	l_ = l;
+	mesh = Mesh::generaCajaTexCor(l);
+	mesh2 = Mesh::generaRectanguloTexCor(l, l, 1, 1);
+	texture.load("..\\Bmps\\baldosaC.bmp");  // cargamos la imagen 
+	texture2.load("..\\Bmps\\papelE.bmp");  // cargamos la imagen 
+
+}
+
+generaCajaTexCor::~generaCajaTexCor()
+{
+	delete mesh;
+	delete mesh2;
+}
+
+void generaCajaTexCor::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		//glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
+		mesh->render();
+
+		texture.unbind();
+		texture2.bind();
+
+		glCullFace(GL_BACK);
+		uploadMvM(cam.getViewMat());
+		mesh->render();
+
+		this->setModelMat(translate(this->getModelMat(), dvec3(0, -l_ / 2, 0)));
+		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
+
+
+		texture2.unbind();
+		texture.bind();
+
+		uploadMvM(cam.getViewMat());
+		glCullFace(GL_FRONT);
+		mesh2->render();
+
+		texture.unbind();
+		texture2.bind();
+
+		glCullFace(GL_BACK);
+		uploadMvM(cam.getViewMat());
+		mesh2->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(1, 0, 0)));
+		this->setModelMat(translate(this->getModelMat(), dvec3(0, l_ / 2, 0)));
+
+		texture2.unbind();
+		texture.bind();
+
+		glDisable(GL_CULL_FACE);
+	}
 }
