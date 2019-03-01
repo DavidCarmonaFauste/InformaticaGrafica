@@ -12,6 +12,7 @@ void Scene::init()
   glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
   glEnable(GL_DEPTH_TEST);  // enable Depth test 
   glEnable(GL_TEXTURE_2D);
+  glEnable(GL_BLEND);
 	  // lights
   // textures  
   // meshes
@@ -90,10 +91,13 @@ void Scene::init()
 
   //grObjects.push_back(new generaEstrella3DTex(100, 4, 50));
 
-  grObjects.push_back(new generaCajaTexCor(50));
+ //grObjects.push_back(new generaCajaTexCor(50));
+
+//grObjects.push_back(new Foto(50,50));
+//grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-200, 75, -300)));
 
 
-//grObjects.push_back(new generaCajaSinTapa(50));
+grObjects.push_back(new Cristalera(100));
 
 
 }

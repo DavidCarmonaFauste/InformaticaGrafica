@@ -171,4 +171,27 @@ protected:
 	GLdouble l_;
 	Texture texture2;
 };
+
+class Foto : public Entity
+{
+public:
+	Foto(GLdouble w, GLdouble h);
+	~Foto();
+	virtual void render(Camera const& cam);
+	virtual void update();
+
+};
+
+class Cristalera : public Entity
+{
+public:
+	Cristalera(GLdouble l);
+	~Cristalera();
+	virtual void render(Camera const& cam);
+protected:
+	Mesh* mesh2;
+	Texture text2;
+	GLdouble l_;
+};
+
 #endif //_H_Entities_H_

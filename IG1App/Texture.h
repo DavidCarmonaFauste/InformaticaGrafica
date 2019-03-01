@@ -11,6 +11,8 @@ public:
 	void load(const std::string & BMP_Name,GLubyte alpha= 255); // cargary transferira GPU 
 	void bind(GLint modo = GL_REPLACE);   // para mezcla de colores 
 	void unbind() { glBindTexture(GL_TEXTURE_2D, 0); }; 
+	void loadColorBuffer();
+	void save(const std::string & BMP_Name);
 protected: 
 	GLuint w, h;  // dimensiones de la imagen 
 	GLuint id;     // identificador interno (GPU) de la textura 

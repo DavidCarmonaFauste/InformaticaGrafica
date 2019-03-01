@@ -395,8 +395,8 @@ generaCajaTexCor::generaCajaTexCor(GLdouble l)
 	l_ = l;
 	mesh = Mesh::generaCajaTexCor(l);
 	mesh2 = Mesh::generaRectanguloTexCor(l, l, 1, 1);
-	texture.load("..\\Bmps\\baldosaC.bmp");  // cargamos la imagen 
-	texture2.load("..\\Bmps\\papelE.bmp");  // cargamos la imagen 
+	texture.load("..\\Bmps\\BaldosaC.bmp");  // cargamos la imagen 
+	texture2.load("..\\Bmps\\CristalTri.bmp");  // cargamos la imagen 
 
 }
 
@@ -449,5 +449,84 @@ void generaCajaTexCor::render(Camera const & cam)
 		texture.bind();
 
 		glDisable(GL_CULL_FACE);
+	}
+}
+
+Foto::Foto(GLdouble w, GLdouble h)
+{
+	mesh = Mesh::generateRectangleTex(w, h);// con coord. de textura 
+	texture.loadColorBuffer();
+}
+
+Foto::~Foto()
+{
+}
+
+void Foto::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		uploadMvM(cam.getViewMat());
+		glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		texture.bind();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices
+		glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
+		GL_REPEAT;
+		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
+		mesh->render();
+		glLineWidth(1);
+	}
+}
+
+void Foto::update()
+{
+	texture.loadColorBuffer();
+}
+
+Cristalera::Cristalera(GLdouble l)
+{
+	l_ = l;
+	mesh = Mesh::generaCajaTexCor(l);
+	mesh2 = Mesh::generateRectangleTex(l, l);
+	texture.load("..\\Bmps\\cristalTri.bmp");  // cargamos la imagen 
+	text2.load("..\\Bmps\\BaldosaC.bmp");  // cargamos la imagen 
+}
+
+Cristalera::~Cristalera()
+{
+	delete mesh;
+	delete mesh2;
+}
+
+void Cristalera::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+		glDepthMask(GL_FALSE);		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		 
+
+		uploadMvM(cam.getViewMat());
+		//glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+		texture.bind();
+		mesh->render();
+
+		this->setModelMat(translate(this->getModelMat(), dvec3(0, -l_ / 2, 0)));
+		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
+
+
+		texture.unbind();
+		text2.bind();
+
+		uploadMvM(cam.getViewMat());
+		mesh2->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(1, 0, 0)));
+		this->setModelMat(translate(this->getModelMat(), dvec3(0, l_ / 2, 0)));
+
+		text2.unbind();
+		texture.bind();
+		//glDepthMask(GL_TRUE);
 	}
 }
