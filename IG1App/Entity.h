@@ -101,6 +101,8 @@ public:
 	virtual void update();
 private:
 	double x, y = 0;
+	double radio;
+	double ang;
 };
 
 class RectanguloRGB : public Entity

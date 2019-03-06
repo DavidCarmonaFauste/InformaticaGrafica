@@ -24,7 +24,6 @@ Camera camera(&viewPort);
 
 // Graphics objects of the scene
 Scene scene;
-//Scene scene2;
 
 bool animation = false;
 bool sceneBool = true;
@@ -73,7 +72,7 @@ int main(int argc, char *argv[])
 
   // after creating the context	(los objetos de la escena)
   camera.set2D();
-  scene.init();    
+  scene.init2();    
   
   glutMainLoop(); //bucle automático, no lo vamos a implementar (responde a eventos repinta)
     
@@ -135,12 +134,18 @@ void key(unsigned char key, int x, int y)
 
 	  if (sceneBool)
 	  {
-		  scene.init2();
+		  glEnable(GL_DEPTH_TEST);  // enable Depth test 
+		  glEnable(GL_TEXTURE_2D);
+		  glEnable(GL_BLEND);
+		  scene.init();
 		  sceneBool = false;
 	  }
 	  else
 	  {
-		 scene.init();
+		 glDisable(GL_DEPTH_TEST);  // enable Depth test 
+		 glDisable(GL_TEXTURE_2D);
+		 glDisable(GL_BLEND);
+		 scene.init2();
 		 sceneBool = true;
 	  }
 	  glutPostRedisplay();
