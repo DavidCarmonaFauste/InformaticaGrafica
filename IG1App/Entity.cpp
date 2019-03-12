@@ -537,6 +537,43 @@ void Cristalera::render(Camera const & cam)
 		text2.bind();
 
 		glDepthMask(GL_TRUE);
+	}
+}
 
+Planta::Planta(GLdouble l)
+{
+	mesh = Mesh::generateRectangleTex(l, l);
+	mesh2 = Mesh::generateRectangleTex(l, l);
+	texture.load("..\\Bmps\\grass.bmp", { 0,0,0,0 }, 0);  // cargamos la imagen 
+}
+
+Planta::~Planta()
+{
+	delete mesh;
+	delete mesh2;
+}
+
+void Planta::render(Camera const & cam)
+{
+	if (mesh != nullptr) {
+
+		texture.bind();
+		uploadMvM(cam.getViewMat());
+
+		mesh->render();
+
+		this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(0, 1, 0)));
+		uploadMvM(cam.getViewMat());
+
+		mesh2->render();
+
+		//this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(1, 0, 0)));
+		//this->setModelMat(translate(this->getModelMat(), dvec3(0, l_ / 2, 0)));
+		//glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+
+		//this->setModelMat(translate(this->getModelMat(), dvec3(0, -l_ / 2, 0)));
+		//this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
 	}
 }

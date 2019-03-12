@@ -196,4 +196,16 @@ protected:
 	GLdouble l_;
 };
 
+class Planta : public Entity
+{
+public:
+	Planta(GLdouble l);
+	~Planta();
+	virtual void render(Camera const& cam);
+protected:
+	Mesh* mesh2;
+	Texture text2;
+	GLdouble l_;
+};
+
 #endif //_H_Entities_H_

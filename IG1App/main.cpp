@@ -137,6 +137,7 @@ void key(unsigned char key, int x, int y)
 		  glEnable(GL_DEPTH_TEST);  // enable Depth test 
 		  glEnable(GL_TEXTURE_2D);
 		  glEnable(GL_BLEND);
+		  glEnable(GL_ALPHA_TEST);
 		  scene.init();
 		  sceneBool = false;
 	  }
@@ -145,6 +146,7 @@ void key(unsigned char key, int x, int y)
 		 glDisable(GL_DEPTH_TEST);  // enable Depth test 
 		 glDisable(GL_TEXTURE_2D);
 		 glDisable(GL_BLEND);
+		 glDisable(GL_ALPHA_TEST);
 		 scene.init2();
 		 sceneBool = true;
 	  }

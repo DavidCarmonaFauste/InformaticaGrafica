@@ -39,3 +39,17 @@ void Texture::load(const std::string & BMP_Name, GLubyte alpha) {
 	glBindTexture(GL_TEXTURE_2D, id);         
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap.data()); // transferira GPU 
 }
+
+void Texture::load(const std::string & BMP_Name, PixMap32RGBA::rgba_color color, GLubyte alpha)
+{
+	if (id == 0) init();
+	PixMap32RGBA pixMap;     // var. local para cargarla imagen del archivo 
+	pixMap.load_bmp24BGR(BMP_Name);     // cargay añadealpha=255 //cargacorrecta? -> exception 
+
+	if (alpha != 255)
+		pixMap.set_colorkey_alpha(color, alpha);
+	w = pixMap.width();
+	h = pixMap.height();
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixMap.data()); // transferira GPU }}
+}
