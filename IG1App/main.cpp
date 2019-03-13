@@ -123,6 +123,9 @@ void key(unsigned char key, int x, int y)
   case 'o':
 	camera.set2D();
 	break;
+  case 'f':
+
+	  break;
   case 'u':
 	  if (animation)
 		  animation = false;

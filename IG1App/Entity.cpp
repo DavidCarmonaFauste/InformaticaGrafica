@@ -240,7 +240,7 @@ void TrianguloAnimado::update()
 	x = 2 * radio * cos(radians(ang));
 	y = 2 * radio * sin(radians(ang));
 
-	ang += 10;
+	ang += 3;
 
 	modelMat = dmat4(1);
 
@@ -400,8 +400,8 @@ generaCajaTexCor::generaCajaTexCor(GLdouble l)
 	l_ = l;
 	mesh = Mesh::generaCajaTexCor(l);
 	mesh2 = Mesh::generaRectanguloTexCor(l, l, 1, 1);
-	texture.load("..\\Bmps\\BaldosaC.bmp");  // cargamos la imagen 
-	texture2.load("..\\Bmps\\CristalTri.bmp");  // cargamos la imagen 
+	texture.load("..\\Bmps\\papelE.bmp");  // cargamos la imagen 
+	texture2.load("..\\Bmps\\container.bmp");  // cargamos la imagen 
 
 }
 
@@ -417,6 +417,8 @@ void generaCajaTexCor::render(Camera const & cam)
 		uploadMvM(cam.getViewMat());
 		//glColor3d(0.0, 0.0, 1.0);
 		glLineWidth(2);
+		texture.bind();
+
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_FRONT);
 		mesh->render();
@@ -431,7 +433,6 @@ void generaCajaTexCor::render(Camera const & cam)
 		this->setModelMat(translate(this->getModelMat(), dvec3(0, -l_ / 2, 0)));
 		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
 		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
-
 
 		texture2.unbind();
 		texture.bind();
@@ -476,11 +477,10 @@ void Foto::render(Camera const & cam)
 		texture.bind();
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Sin relleno
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //Solo vértices
-		glPolygonMode(GL_FRONT, GL_FILL); //Con relleno
-		GL_REPEAT;
 		//glPolygonMode(GL_BACK, GL_LINE); //Tiene relleno por una cara
 		mesh->render();
 		glLineWidth(1);
+		texture.unbind();
 	}
 }
 
@@ -494,7 +494,7 @@ Cristalera::Cristalera(GLdouble l)
 	l_ = l;
 	mesh = Mesh::generaCajaTexCor(l);
 	mesh2 = Mesh::generateRectangleTex(l, l);
-	texture.load("..\\Bmps\\cristalTri.bmp", 185);  // cargamos la imagen 
+	texture.load("..\\Bmps\\cristalTri.bmp", 100);  // cargamos la imagen 
 	text2.load("..\\Bmps\\BaldosaC.bmp", 255);  // cargamos la imagen 
 }
 
@@ -564,10 +564,11 @@ void Planta::render(Camera const & cam)
 
 		this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(0, 1, 0)));
 		uploadMvM(cam.getViewMat());
+		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(0, 1, 0)));
+
 
 		mesh2->render();
 
-		//this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(1, 0, 0)));
 		//this->setModelMat(translate(this->getModelMat(), dvec3(0, l_ / 2, 0)));
 		//glColor3d(0.0, 0.0, 1.0);
 		glLineWidth(2);
