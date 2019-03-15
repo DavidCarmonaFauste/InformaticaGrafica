@@ -26,7 +26,7 @@ Camera camera(&viewPort);
 Scene scene;
 
 bool animation = false;
-bool sceneBool = true;
+bool sceneBool = false;
 
 GLuint last_update_tick = 0;
 
@@ -72,7 +72,11 @@ int main(int argc, char *argv[])
 
   // after creating the context	(los objetos de la escena)
   camera.set2D();
-  scene.init2();    
+  glEnable(GL_DEPTH_TEST);  // enable Depth test 
+  glEnable(GL_TEXTURE_2D);
+  glEnable(GL_BLEND);
+  glEnable(GL_ALPHA_TEST);
+  scene.init();    
   
   glutMainLoop(); //bucle automático, no lo vamos a implementar (responde a eventos repinta)
     

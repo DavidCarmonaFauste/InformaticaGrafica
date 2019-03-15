@@ -34,6 +34,9 @@ void Scene::init()
   //grObjects.push_back(new generaCajaSinTapa(50)); //Cubo con suelo
 
   //Escena 3D
+  grObjects.push_back(new RectangleTexCor(500, 500, 5,5));
+  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+
   
   grObjects.push_back(new generaEstrella3DTex(25, 4, 50));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-75 , 100, -75 )));
@@ -46,12 +49,11 @@ void Scene::init()
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-75, 50, -75)));
 
   glAlphaFunc(GL_GREATER, 0);
-
   grObjects.push_back(new Planta(100));
-  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(75, 50, 75)));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(150, 50, -150)));
 
-  grObjects.push_back(new Cristalera(300));
-  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+  //grObjects.push_back(new Cristalera(300));
+  //grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
 }
 
 void Scene::init2()
