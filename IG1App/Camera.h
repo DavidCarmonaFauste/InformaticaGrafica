@@ -4,8 +4,12 @@
 
 #include <GL/freeglut.h>
 #include <glm.hpp>
+#include <gtc/matrix_access.hpp>
 
 #include "Viewport.h"
+
+using namespace glm;
+
 //-------------------------------------------------------------------------
 
 class Camera {
@@ -23,9 +27,12 @@ public:
 	void set2D();  // eye(0,0,500), look(0,0,0), up(0, 1, 0)
 	void set3D();  // eye(500,500,500), look(0,10,0), up(0, 1, 0)
     
-	void pitch(GLdouble a); // rotates a degrees on the X axis
+	/*void pitch(GLdouble a); // rotates a degrees on the X axis
 	void yaw(GLdouble a);   // rotates a degrees on the Y axis
-	void roll(GLdouble a);  // rotates a degrees on the Z axis
+	void roll(GLdouble a);  // rotates a degrees on the Z axis*/
+
+	void setAxes();
+	void setVm();
 
 	// projection matrix
 	glm::dmat4 const& getProjMat() const { return projMat; };
@@ -36,12 +43,28 @@ public:
 
 	// update scale factor and transfers projMat to GPU
 	void uploadScale(GLdouble s); 
+
+	void moveLR(GLdouble cs); // Left / Right
+	void moveFB(GLdouble cs); // Forward / Backward
+	void moveUD(GLdouble cs); // Up / Down 
+
+	void orbit(GLdouble incAng, GLdouble incY); // modifica la posición de la cámara 
+
 	
 protected:
 	
 	glm::dmat4 viewMat;    // view matrix = inverse of modeling matrix
 	
 	glm::dmat4 projMat;     // projection matrix
+
+	glm::dvec3 eye, look, up; // para generar la matriz de vista con lookAt
+
+	glm::dvec3 right, upward, front; // para los ejes right=u, upward=v, front=-n 
+
+	GLdouble ang;
+
+	GLdouble radio;
+
 	
 	GLdouble xRight, xLeft, yTop, yBot;    // size of scene visible area
 	GLdouble nearVal = 1, farVal = 10000;  // view volume

@@ -3,25 +3,30 @@
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 
-using namespace glm;
-
 //-------------------------------------------------------------------------
 
 void Camera::set2D() 
 {
-	dvec3 eye= dvec3(0, 0, 500);
-	dvec3 look= dvec3(0, 0, 0);
-	dvec3 up= dvec3(0, 1, 0);
-	viewMat = lookAt(eye, look, up);
+	eye= dvec3(0, 0, 500);
+	look= dvec3(0, 0, 0);
+	up= dvec3(0, 1, 0);
+
+	ang = 270;
+	radio = 1000;
+	setVm();
 }
 //-------------------------------------------------------------------------
 
 void Camera::set3D() 
 {
-	dvec3 eye= dvec3(500, 500, 500);
-	dvec3 look= dvec3(0, 10, 0);
-	dvec3 up= dvec3(0, 1, 0);
-	viewMat = lookAt(eye, look, up);
+	eye= dvec3(500, 500, 500);
+	look= dvec3(0, 10, 0);
+	up= dvec3(0, 1, 0);
+
+	ang = 315;
+	radio = 1000;
+
+	setVm();
 }
 //-------------------------------------------------------------------------
 
@@ -32,7 +37,7 @@ void Camera::uploadVM() const
 }
 //-------------------------------------------------------------------------
 
-void Camera::pitch(GLdouble a) 
+/*void Camera::pitch(GLdouble a) 
 {  
 	viewMat = rotate(viewMat, glm::radians(-a), glm::dvec3(1.0, 0, 0));
 }
@@ -45,6 +50,18 @@ void Camera::yaw(GLdouble a)
 void Camera::roll(GLdouble a)
 {
 	viewMat = rotate(viewMat, glm::radians(-a), glm::dvec3(0, 0, 1.0));
+}*/
+
+void Camera::setAxes()
+{
+	right = row(viewMat, 0);
+	upward = row(viewMat, 1);
+	front = -row(viewMat, 2);
+}
+void Camera::setVm()
+{
+	glm::dmat4 viewMat = glm::lookAt(eye, look, up); 
+	setAxes();
 }
 //-------------------------------------------------------------------------
 
@@ -67,6 +84,32 @@ void Camera::uploadScale(GLdouble s)
 	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
 
 	uploadPM();
+}
+void Camera::moveLR(GLdouble cs)
+{
+	eye.x += cs;
+	//look += right * cs;
+	setVm();
+}
+void Camera::moveFB(GLdouble cs)
+{
+	eye.z += cs;
+	//look += front * cs;
+	setVm();
+}
+void Camera::moveUD(GLdouble cs)
+{
+	eye.y += cs;
+	//look += upward * cs;
+	setVm();
+}
+void Camera::orbit(GLdouble incAng, GLdouble incY)
+{
+	ang += incAng;
+	eye.x = look.x + cos(radians(ang)) * radio;
+	eye.z = look.z - sin(radians(ang)) * radio;
+	eye.y += incY;
+	setVm();
 }
 //-------------------------------------------------------------------------
 

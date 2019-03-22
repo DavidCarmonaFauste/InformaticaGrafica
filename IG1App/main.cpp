@@ -30,6 +30,10 @@ bool sceneBool = true;
 
 GLuint last_update_tick = 0;
 
+dvec2 mCoord;
+
+int mBot;
+
 //----------- Callbacks ----------------------------------------------------
 
 void display();
@@ -37,7 +41,9 @@ void resize(int newWidth, int newHeight);
 void key(unsigned char key, int x, int y);
 void specialKey(int key, int x, int y);
 void update();
-
+void mouse(int button, int state, int x, int y);
+void motion(int x, int y);
+void mouseWheel(int n, int d, int x, int y);
 //-------------------------------------------------------------------------
 
 int main(int argc, char *argv[])
@@ -66,6 +72,9 @@ int main(int argc, char *argv[])
   glutSpecialFunc(specialKey);
   glutDisplayFunc(display);		//como se dibuja el contenido de la ventana
   glutIdleFunc(update);
+  glutMouseFunc(mouse);
+  glutMotionFunc(motion);
+  glutMouseWheelFunc(mouseWheel);
 
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
@@ -170,16 +179,16 @@ void specialKey(int key, int x, int y)
 
   switch (key) {
   case GLUT_KEY_RIGHT:
-    camera.pitch(1);   // rotate 1 on the X axis
+  //  camera.orbit(1, 0);   // rotate 1 on the X axis
     break;
   case GLUT_KEY_LEFT:
-    camera.yaw(1);     // rotate 1 on the Y axis 
+    //camera.yaw(1);     // rotate 1 on the Y axis 
     break;
   case GLUT_KEY_UP:
-    camera.roll(1);    // rotate 1 on the Z axis
+   // camera.roll(1);    // rotate 1 on the Z axis
     break;
   case GLUT_KEY_DOWN:
-    camera.roll(-1);   // rotate -1 on the Z axis
+  //  camera.roll(-1);   // rotate -1 on the Z axis
     break;
   default:
     need_redisplay = false;
@@ -204,4 +213,52 @@ void update()
 		}
 
 	}
+}
+
+void mouse(int button, int state, int x, int y)
+{
+	mCoord = dvec2(x, y);
+
+	if (state == GLUT_DOWN)
+	{
+		mBot = button;
+	}
+
+	else if (state == GLUT_UP)
+		mBot = -1;
+}
+
+void motion(int x, int y)
+{
+		if (mBot == GLUT_LEFT_BUTTON) 
+		{
+			dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
+			mCoord = dvec2(x, y); // Guardamos la posición actual
+			mp = (mCoord - mp); // desplazamiento realizado
+			camera.orbit(mp.x * 0.05, mp.y); // sensitivity = 0.05
+			glutPostRedisplay();
+		}
+		else if (mBot == GLUT_RIGHT_BUTTON) 
+		{
+			dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
+			mCoord = dvec2(x, y); // Guardamos la posición actual
+			mp = (mCoord - mp); // desplazamiento realizado
+			camera.moveLR(mp.x * 0.05); // sensitivity = 0.05
+			camera.moveUD(mp.y * 0.05); // sensitivity = 0.05
+			glutPostRedisplay();
+		}
+}
+
+void mouseWheel(int n, int d, int x, int y)
+{
+		if (GLUT_ACTIVE_CTRL)
+		{
+			camera.uploadScale(+0.01 * d);
+			glutPostRedisplay();
+		}
+		else
+		{
+			camera.moveFB(5 * d);
+			glutPostRedisplay();
+		}
 }
