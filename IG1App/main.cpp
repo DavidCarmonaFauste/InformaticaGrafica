@@ -18,9 +18,11 @@ using namespace std;
 
 // Viewport position and size
 Viewport viewPort(800, 600);   
+Viewport v2(400, 300);
 
 // Camera position, view volume and projection
-Camera camera(&viewPort);    
+Camera camera(&viewPort);   
+Camera camera2(&v2);
 
 // Graphics objects of the scene
 Scene scene;
@@ -33,6 +35,8 @@ GLuint last_update_tick = 0;
 dvec2 mCoord;
 
 GLint mBot;
+
+bool cenital = false;
 
 //----------- Callbacks ----------------------------------------------------
 
@@ -96,7 +100,14 @@ void display()   // double buffering
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   
   
-  scene.render(camera);   
+  if (cenital)
+  {
+    scene.render(camera2);
+  }
+
+  scene.render(camera);
+
+
     
   glutSwapBuffers();  
 }
@@ -159,6 +170,23 @@ void key(unsigned char key, int x, int y)
   case 'e':
 	  camera.moveUD(5);
 	  break;
+  case 'p':
+    camera.changePrj();
+    break;
+  case 'c':
+    cenital = !cenital;
+
+    if (cenital)
+    {
+      viewPort.setSize(400, 300);
+      camera2.topView();
+    }
+    else
+    {
+      viewPort.setSize(800, 600);
+
+    }
+    break;
   case '3':
 	  scene.clear();
 

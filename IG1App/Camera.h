@@ -50,7 +50,9 @@ public:
 
 	void orbit(GLdouble incAng, GLdouble incY); // modifica la posición de la cámara 
 
-	//	void changeProj();
+  void changePrj();
+
+  void topView();
 
 protected:
 	
@@ -66,6 +68,7 @@ protected:
 
 	GLdouble radio = 1000; //radio de orbit
 
+  bool orto = false;
 	
 	GLdouble xRight, xLeft, yTop, yBot;    // size of scene visible area
 	GLdouble nearVal = 1, farVal = 10000;  // view volume

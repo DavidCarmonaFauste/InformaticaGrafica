@@ -73,7 +73,9 @@ void Camera::uploadSize(GLdouble aw, GLdouble ah)
 	yTop = ah / 2.0;
 	yBot = -yTop;
 
-	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+  if (orto)
+    projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+  else    projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, yTop, farVal);
 
 	uploadPM();
 }
@@ -83,7 +85,10 @@ void Camera::uploadScale(GLdouble s)
 {
 	factScale -= s;
 	if (factScale < 0) factScale = 0.01;
-	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+
+  if (orto)
+    projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
+  else    projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, yTop, farVal);
 
 	uploadPM();
 }
@@ -113,6 +118,23 @@ void Camera::orbit(GLdouble incAng, GLdouble incY)
 	eye.z = look.z - sin(radians(ang)) * radio;
 	eye.y += incY;
 	setVm();
+}
+void Camera::changePrj()
+{
+  orto = !orto;
+
+  if (orto)
+    projMat = ortho(xLeft, xRight, yBot, yTop, nearVal, farVal);  else    projMat = frustum(xLeft, xRight, yBot, yTop, yTop, farVal);
+
+  uploadPM();
+}
+void Camera::topView()
+{
+  eye = dvec3(0, 100, 0);
+  look = dvec3(0, 0, 0);
+  up = dvec3(0, 1, 0);
+
+  viewMat = lookAt(eye, look, up);
 }
 //-------------------------------------------------------------------------
 
