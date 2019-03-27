@@ -64,7 +64,7 @@ protected:
 
 	GLdouble ang; //angulo de orbit
 
-	GLdouble radio; //radio de orbit
+	GLdouble radio = 1000; //radio de orbit
 
 	
 	GLdouble xRight, xLeft, yTop, yBot;    // size of scene visible area

@@ -148,16 +148,16 @@ void key(unsigned char key, int x, int y)
 	  camera.moveLR(5);
 	  break;
   case 'w':
-	  camera.moveUD(5);
+	  camera.moveFB(5);
 	  break;
   case 's':
-	  camera.moveUD(-5);
-	  break;
-  case 'q':
 	  camera.moveFB(-5);
 	  break;
+  case 'q':
+	  camera.moveUD(-5);
+	  break;
   case 'e':
-	  camera.moveFB(5);
+	  camera.moveUD(5);
 	  break;
   case '3':
 	  scene.clear();
@@ -203,10 +203,10 @@ void specialKey(int key, int x, int y)
 	  camera.moveLR(-5);
 	  break;
   case GLUT_KEY_UP:
-	  camera.moveUD(5);
+	  camera.moveFB(5);
 	  break;
   case GLUT_KEY_DOWN:
-	  camera.moveUD(-5);
+	  camera.moveFB(-5);
     break;
   default:
     need_redisplay = false;
@@ -245,13 +245,13 @@ void mouse(int button, int state, int x, int y)
 
 void motion(int x, int y)
 {
-	dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
-	mCoord = dvec2(x, y); // Guardamos la posición actual
-	mp = (mCoord - mp); // desplazamiento realizado	
+	dvec2 mp = mCoord;
+	mCoord = dvec2(x, y); 
+	mp = (mCoord - mp); 
 		
 		if (mBot == GLUT_LEFT_BUTTON) 
 		{
-			camera.orbit(mp.x * -0.05, mp.y * 0.05); 
+			camera.orbit(mp.x * -0.05, mp.y * 0.5); 
 			glutPostRedisplay();
 		}
 		else if (mBot == GLUT_RIGHT_BUTTON) 
