@@ -32,7 +32,7 @@ GLuint last_update_tick = 0;
 
 dvec2 mCoord;
 
-int mBot;
+GLint mBot;
 
 //----------- Callbacks ----------------------------------------------------
 
@@ -141,6 +141,24 @@ void key(unsigned char key, int x, int y)
 	  else
 		  animation = true;
 	  break;
+  case 'a':
+	  camera.moveLR(-5);
+	  break;
+  case 'd':
+	  camera.moveLR(5);
+	  break;
+  case 'w':
+	  camera.moveUD(5);
+	  break;
+  case 's':
+	  camera.moveUD(-5);
+	  break;
+  case 'q':
+	  camera.moveFB(-5);
+	  break;
+  case 'e':
+	  camera.moveFB(5);
+	  break;
   case '3':
 	  scene.clear();
 
@@ -179,16 +197,16 @@ void specialKey(int key, int x, int y)
 
   switch (key) {
   case GLUT_KEY_RIGHT:
-  //  camera.orbit(1, 0);   // rotate 1 on the X axis
-    break;
+	  camera.moveLR(5);
+	  break;
   case GLUT_KEY_LEFT:
-    //camera.yaw(1);     // rotate 1 on the Y axis 
-    break;
+	  camera.moveLR(-5);
+	  break;
   case GLUT_KEY_UP:
-   // camera.roll(1);    // rotate 1 on the Z axis
-    break;
+	  camera.moveUD(5);
+	  break;
   case GLUT_KEY_DOWN:
-  //  camera.roll(-1);   // rotate -1 on the Z axis
+	  camera.moveUD(-5);
     break;
   default:
     need_redisplay = false;
@@ -211,7 +229,6 @@ void update()
 			glutPostRedisplay();
 			last_update_tick = glutGet(GLUT_ELAPSED_TIME);
 		}
-
 	}
 }
 
@@ -220,9 +237,7 @@ void mouse(int button, int state, int x, int y)
 	mCoord = dvec2(x, y);
 
 	if (state == GLUT_DOWN)
-	{
 		mBot = button;
-	}
 
 	else if (state == GLUT_UP)
 		mBot = -1;
@@ -230,35 +245,37 @@ void mouse(int button, int state, int x, int y)
 
 void motion(int x, int y)
 {
+	dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
+	mCoord = dvec2(x, y); // Guardamos la posición actual
+	mp = (mCoord - mp); // desplazamiento realizado	
+		
 		if (mBot == GLUT_LEFT_BUTTON) 
 		{
-			dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
-			mCoord = dvec2(x, y); // Guardamos la posición actual
-			mp = (mCoord - mp); // desplazamiento realizado
-			camera.orbit(mp.x * 0.05, mp.y); // sensitivity = 0.05
+			camera.orbit(mp.x * -0.05, mp.y * 0.05); 
 			glutPostRedisplay();
 		}
 		else if (mBot == GLUT_RIGHT_BUTTON) 
 		{
-			dvec2 mp = mCoord; // guardar la anterior posición en var. temp.
-			mCoord = dvec2(x, y); // Guardamos la posición actual
-			mp = (mCoord - mp); // desplazamiento realizado
-			camera.moveLR(mp.x * 0.05); // sensitivity = 0.05
-			camera.moveUD(mp.y * 0.05); // sensitivity = 0.05
+			camera.moveLR(mp.x * -0.05); 
+			camera.moveUD(mp.y * 0.05);
 			glutPostRedisplay();
 		}
 }
 
 void mouseWheel(int n, int d, int x, int y)
 {
-		if (GLUT_ACTIVE_CTRL)
-		{
-			camera.uploadScale(+0.01 * d);
-			glutPostRedisplay();
-		}
-		else
+	int m = glutGetModifiers();	//returns any special key that is pressed (CTRL, ALT, SHIFT)
+
+		if (m == 0) // none of those special keys is pressed
 		{
 			camera.moveFB(5 * d);
+
+
+			glutPostRedisplay();
+		}
+		else if (m == GLUT_ACTIVE_CTRL) {
+
+			camera.uploadScale(+0.01 * d);
 			glutPostRedisplay();
 		}
 }

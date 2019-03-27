@@ -7,26 +7,27 @@
 
 void Camera::set2D() 
 {
+	ang = 270;
+
 	eye= dvec3(0, 0, 500);
 	look= dvec3(0, 0, 0);
 	up= dvec3(0, 1, 0);
 
-	ang = 270;
-	radio = 1000;
-	setVm();
+//	setVm();
+	viewMat = lookAt(eye, look, up);
 }
 //-------------------------------------------------------------------------
 
 void Camera::set3D() 
 {
+	ang = 315;
+
 	eye= dvec3(500, 500, 500);
 	look= dvec3(0, 10, 0);
 	up= dvec3(0, 1, 0);
 
-	ang = 315;
-	radio = 1000;
-
-	setVm();
+	//	setVm();
+	viewMat = lookAt(eye, look, up);
 }
 //-------------------------------------------------------------------------
 
@@ -60,7 +61,7 @@ void Camera::setAxes()
 }
 void Camera::setVm()
 {
-	glm::dmat4 viewMat = glm::lookAt(eye, look, up); 
+	viewMat = lookAt(eye, look, up); 
 	setAxes();
 }
 //-------------------------------------------------------------------------
@@ -71,6 +72,7 @@ void Camera::uploadSize(GLdouble aw, GLdouble ah)
 	xLeft = -xRight;
 	yTop = ah / 2.0;
 	yBot = -yTop;
+
 	projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
 
 	uploadPM();
@@ -87,22 +89,23 @@ void Camera::uploadScale(GLdouble s)
 }
 void Camera::moveLR(GLdouble cs)
 {
-	eye.x += cs;
-	//look += right * cs;
+	eye += right * cs;
+	look += right * cs;
 	setVm();
 }
 void Camera::moveFB(GLdouble cs)
 {
-	eye.z += cs;
-	//look += front * cs;
+	eye += front * cs;
+	look += front * cs;
 	setVm();
 }
 void Camera::moveUD(GLdouble cs)
 {
-	eye.y += cs;
-	//look += upward * cs;
+	eye += upward * cs;
+	look += upward * cs;
 	setVm();
 }
+
 void Camera::orbit(GLdouble incAng, GLdouble incY)
 {
 	ang += incAng;

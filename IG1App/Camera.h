@@ -50,7 +50,8 @@ public:
 
 	void orbit(GLdouble incAng, GLdouble incY); // modifica la posición de la cámara 
 
-	
+	//	void changeProj();
+
 protected:
 	
 	glm::dmat4 viewMat;    // view matrix = inverse of modeling matrix
@@ -61,9 +62,9 @@ protected:
 
 	glm::dvec3 right, upward, front; // para los ejes right=u, upward=v, front=-n 
 
-	GLdouble ang;
+	GLdouble ang; //angulo de orbit
 
-	GLdouble radio;
+	GLdouble radio; //radio de orbit
 
 	
 	GLdouble xRight, xLeft, yTop, yBot;    // size of scene visible area
