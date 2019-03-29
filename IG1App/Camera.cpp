@@ -9,12 +9,12 @@ void Camera::set2D()
 {
 	ang = 270;
 
-	eye= dvec3(0, 0, 500);
+	eye= dvec3(0, 0, radio);
 	look= dvec3(0, 0, 0);
 	up= dvec3(0, 1, 0);
 
-//	setVm();
-	viewMat = lookAt(eye, look, up);
+	setVm();
+	
 }
 //-------------------------------------------------------------------------
 
@@ -22,12 +22,14 @@ void Camera::set3D()
 {
 	ang = 315;
 
-	eye= dvec3(500, 500, 500);
+	eye= dvec3(radio, radio, radio);
 	look= dvec3(0, 10, 0);
 	up= dvec3(0, 1, 0);
 
-	//	setVm();
-	viewMat = lookAt(eye, look, up);
+  eye.x = look.x + cos(radians(ang)) * radio;
+  eye.z = look.z - sin(radians(ang)) * radio;
+
+	setVm();
 }
 //-------------------------------------------------------------------------
 
@@ -75,7 +77,8 @@ void Camera::uploadSize(GLdouble aw, GLdouble ah)
 
   if (orto)
     projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
-  else    projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, yTop, farVal);
+  else
+    projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, yTop, farVal);
 
 	uploadPM();
 }
@@ -88,7 +91,8 @@ void Camera::uploadScale(GLdouble s)
 
   if (orto)
     projMat = ortho(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, nearVal, farVal);
-  else    projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, yTop, farVal);
+  else
+    projMat = frustum(xLeft*factScale, xRight*factScale, yBot*factScale, yTop*factScale, yTop, farVal);
 
 	uploadPM();
 }
@@ -124,13 +128,15 @@ void Camera::changePrj()
   orto = !orto;
 
   if (orto)
-    projMat = ortho(xLeft, xRight, yBot, yTop, nearVal, farVal);  else    projMat = frustum(xLeft, xRight, yBot, yTop, yTop, farVal);
+    projMat = ortho(xLeft, xRight, yBot, yTop, nearVal, farVal);
+  else
+    projMat = frustum(xLeft, xRight, yBot, yTop, yTop, farVal);
 
   uploadPM();
 }
 void Camera::topView()
 {
-  eye = dvec3(0, 100, 0);
+  eye = dvec3(0, 500, 1);
   look = dvec3(0, 0, 0);
   up = dvec3(0, 1, 0);
 

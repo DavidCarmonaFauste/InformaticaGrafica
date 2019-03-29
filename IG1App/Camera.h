@@ -66,7 +66,7 @@ protected:
 
 	GLdouble ang; //angulo de orbit
 
-	GLdouble radio = 1000; //radio de orbit
+	GLdouble radio = 500; //radio de orbit
 
   bool orto = false;
 	

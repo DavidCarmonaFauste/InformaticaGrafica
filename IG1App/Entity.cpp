@@ -578,3 +578,32 @@ void Planta::render(Camera const & cam)
 		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
 	}
 }
+
+Esfera::Esfera(GLdouble radio, GLint x, GLint y, std::string text)
+{
+  qObj = gluNewQuadric();
+  radio_ = radio;
+  texture.load(text);
+}
+
+Esfera::~Esfera()
+{
+  gluDeleteQuadric(qObj);
+}
+
+void Esfera::render(Camera const & cam)
+{
+  glEnable(GL_CULL_FACE);
+
+  gluQuadricDrawStyle(qObj, GLU_FILL);  
+  gluQuadricTexture(qObj, GL_TRUE);
+  texture.bind();
+  uploadMvM(cam.getViewMat());
+  glLineWidth(2);
+  gluSphere(qObj, radio_, 50, 50);
+  texture.unbind();
+  glDisable(GL_CULL_FACE);
+
+  //gluQuadricNormals(qObj, GLU_SMOOTH);
+  //gluQuadricOrientation(qObj, GLU_OUTSIDE);
+}

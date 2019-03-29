@@ -66,6 +66,17 @@ void Scene::init2()
 	grObjects.push_back(new TrianguloAnimado(100));
 	grObjects.push_back(new RectanguloRGB(200, 100));
 }
+
+void Scene::init3()
+{
+  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
+
+  grObjects.push_back(new EjesRGB(200.0)); //crea los ejes de la escena
+  grObjects.push_back(new RectangleTexCor(500,500, 5, 5)); //crea los ejes de la escena
+  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+  grObjects.push_back(new Esfera(50, 0, 0, "..\\Bmps\\lego.bmp")); //crea los ejes de la escena
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(0, 100, 0)));
+}
 //------------------------------------------------------------------------
 
 Scene::~Scene()

@@ -17,12 +17,13 @@ using namespace std;
 //---------- Global variables -------------------------------------------------------------
 
 // Viewport position and size
-Viewport viewPort(800, 600);   
-Viewport v2(400, 300);
+Viewport viewPort(800, 600); 
+Viewport v1(400, 600);
+
 
 // Camera position, view volume and projection
 Camera camera(&viewPort);   
-Camera camera2(&v2);
+Camera camera2(&v1);
 
 // Graphics objects of the scene
 Scene scene;
@@ -37,6 +38,9 @@ dvec2 mCoord;
 GLint mBot;
 
 bool cenital = false;
+
+GLint windowWidth;
+GLint windowHeight;
 
 //----------- Callbacks ----------------------------------------------------
 
@@ -85,6 +89,7 @@ int main(int argc, char *argv[])
 
   // after creating the context	(los objetos de la escena)
   camera.set2D();
+  camera2.set2D();
   scene.init2();    
   
   glutMainLoop(); //bucle automático, no lo vamos a implementar (responde a eventos repinta)
@@ -99,14 +104,24 @@ int main(int argc, char *argv[])
 void display()   // double buffering
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   
-  
-  if (cenital)
-  {
-    scene.render(camera2);
-  }
 
-  scene.render(camera);
-
+    if (cenital)
+    {
+      viewPort.uploadSize(windowWidth /2, windowHeight);
+      camera.uploadSize(windowWidth/2, windowHeight);
+      scene.render(camera);
+      v1.uploadPos(windowWidth/2, 0);
+      v1.uploadSize(windowWidth/2, windowHeight);
+      camera2.uploadSize(windowWidth/2, windowHeight);
+      camera2.topView();
+      scene.render(camera2);
+    }
+    else
+    {
+      viewPort.uploadSize(windowWidth, windowHeight);
+      camera.uploadSize(windowWidth, windowHeight);
+      scene.render(camera);
+    }
 
     
   glutSwapBuffers();  
@@ -115,11 +130,33 @@ void display()   // double buffering
 
 void resize(int newWidth, int newHeight)
 {
-  // Resize Viewport 
-  viewPort.uploadSize(newWidth, newHeight);  
+  windowWidth = newWidth;
+  windowHeight = newHeight;
+
+  if (cenital)
+  {
+    viewPort.uploadSize(newWidth/2, newHeight);
+    v1.uploadSize(newWidth / 2, newHeight);
+    camera.uploadSize(viewPort.getW(), viewPort.getH());    // scale unchanged
+    camera2.uploadSize(viewPort.getW(), viewPort.getH());    // scale unchanged
+    //viewPort.uploadPos(0, 0);
+    v1.uploadPos(viewPort.getW(), 0);
+  }
+  else
+  {
+    viewPort.uploadSize(newWidth, newHeight);
+    camera.uploadSize(viewPort.getW(), viewPort.getH());    // scale unchanged
+  }
   
+  // Resize Viewport 
+  //viewPort.uploadSize(newWidth, newHeight);
+
+  //v1.setPos(0, 0);
+
+  //v1.uploadSize(newWidth/2, newHeight);
+
   // Resize Scene Visible Area 
-  camera.uploadSize(viewPort.getW(), viewPort.getH());    // scale unchanged
+  //camera.uploadSize(viewPort.getW(), viewPort.getH());    // scale unchanged
 }
 //-------------------------------------------------------------------------
 
@@ -139,6 +176,7 @@ void key(unsigned char key, int x, int y)
     break;
   case 'l':
 	camera.set3D(); 
+  camera2.set3D();
 	break;
   case 'o':
 	camera.set2D();
@@ -175,17 +213,15 @@ void key(unsigned char key, int x, int y)
     break;
   case 'c':
     cenital = !cenital;
+    break;
+  case '4':
+    scene.clear();
+    glEnable(GL_TEXTURE_2D);
 
-    if (cenital)
-    {
-      viewPort.setSize(400, 300);
-      camera2.topView();
-    }
-    else
-    {
-      viewPort.setSize(800, 600);
 
-    }
+    scene.init3();
+
+    glutPostRedisplay();    
     break;
   case '3':
 	  scene.clear();

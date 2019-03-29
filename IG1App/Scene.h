@@ -20,6 +20,7 @@ public:
 	~Scene();
     void init();
 	void init2();
+  void init3();
 
     void render(Camera const& cam);
 
