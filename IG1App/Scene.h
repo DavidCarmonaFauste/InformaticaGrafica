@@ -7,6 +7,8 @@
 
 #include "Camera.h"
 #include "Entity.h"
+#include "EntityMaterial.h"
+#include "DirLight.h"
 //#include "Mesh.h"
 
 #include <vector>
@@ -31,6 +33,9 @@ public:
 protected:
 
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
+	  std::vector<Texture*> grTextures;
+
+	  DirLight luzDireccional;
 };
 
 //-------------------------------------------------------------------------

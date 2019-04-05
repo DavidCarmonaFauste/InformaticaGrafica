@@ -69,12 +69,22 @@ void Scene::init2()
 
 void Scene::init3()
 {
-  glClearColor(1.0, 1.0, 1.0, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
+  glClearColor(0.0, 0.0, 0.05, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
+
+  Material m;
+  m.setCooper();
+
+  Texture* t = new Texture();
+  t->load("..\\Bmps\\lego.bmp");
+  grTextures.push_back(t);
+
+  luzDireccional.setDir(fvec3(0, 0.25, 1));
+  luzDireccional.uploadLI();
 
   grObjects.push_back(new EjesRGB(200.0)); //crea los ejes de la escena
   grObjects.push_back(new RectangleTexCor(500,500, 5, 5)); //crea los ejes de la escena
   grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
-  grObjects.push_back(new Esfera(50, 0, 0, "..\\Bmps\\lego.bmp")); //crea los ejes de la escena
+  grObjects.push_back(new Esfera(50, 0, 0, grTextures.front(), m)); //crea los ejes de la escena
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(0, 100, 0)));
 }
 //------------------------------------------------------------------------
@@ -91,6 +101,9 @@ Scene::~Scene()
 
 void Scene::render(Camera const& cam)
 {
+
+	luzDireccional.upload(cam.getViewMat());
+
 	for (Entity* el: grObjects)
 	{
 		el->render(cam);

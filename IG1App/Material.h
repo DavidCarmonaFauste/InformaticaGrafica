@@ -15,12 +15,12 @@ class Material
 	// ambos lados
 	GLuint sh = GL_SMOOTH;
 	// smooth / flat shading
-	virtual
-		void upload() {
+
+public:
+	void setCooper();
+	virtual	void upload() {
 		glShadeModel(sh);
 		glMaterialfv(face, GL_AMBIENT, glm::value_ptr(ambient));
 	};
-
-	void setCooper();
 };
 

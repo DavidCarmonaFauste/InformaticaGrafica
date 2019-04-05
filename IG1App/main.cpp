@@ -87,11 +87,14 @@ int main(int argc, char *argv[])
   cout << glGetString(GL_VERSION) << '\n';
   cout << glGetString(GL_VENDOR) << '\n';
 
+  glEnable(GL_DEPTH_TEST);  // enable Depth test 
+
+
   // after creating the context	(los objetos de la escena)
   camera.set2D();
   camera2.set2D();
   scene.init2();    
-  
+
   glutMainLoop(); //bucle automático, no lo vamos a implementar (responde a eventos repinta)
     
   //cin.ignore(INT_MAX, '\n');  cin.get();  
@@ -211,13 +214,19 @@ void key(unsigned char key, int x, int y)
   case 'p':
     camera.changePrj();
     break;
-  case 'c':
+  case 'm':
     cenital = !cenital;
     break;
+  case 'c':
+	  glEnable(GL_LIGHTING);
+	  break;
+  case 'v':
+	  glDisable(GL_LIGHTING);
+	  break;
   case '4':
     scene.clear();
     glEnable(GL_TEXTURE_2D);
-
+	glEnable(GL_NORMALIZE);
 
     scene.init3();
 
@@ -226,9 +235,11 @@ void key(unsigned char key, int x, int y)
   case '3':
 	  scene.clear();
 
+	  glDisable(GL_LIGHTING);
+	  glDisable(GL_NORMALIZE);
+
 	  if (sceneBool)
 	  {
-		  glEnable(GL_DEPTH_TEST);  // enable Depth test 
 		  glEnable(GL_TEXTURE_2D);
 		  glEnable(GL_BLEND);
 		  glEnable(GL_ALPHA_TEST);
@@ -237,7 +248,6 @@ void key(unsigned char key, int x, int y)
 	  }
 	  else
 	  {
-		 glDisable(GL_DEPTH_TEST);  // enable Depth test 
 		 glDisable(GL_TEXTURE_2D);
 		 glDisable(GL_BLEND);
 		 glDisable(GL_ALPHA_TEST);

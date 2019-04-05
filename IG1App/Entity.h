@@ -208,15 +208,5 @@ protected:
 	GLdouble l_;
 };
 
-class Esfera : public Entity
-{
-public:
-  Esfera(GLdouble radio, GLint x, GLint y, std::string text);
-  ~Esfera();
-  virtual void render(Camera const& cam);
-protected:
-  GLUquadric* qObj;
-  GLdouble radio_;
-};
 
 #endif //_H_Entities_H_

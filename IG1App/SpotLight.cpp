@@ -1,12 +1,12 @@
-#include "SpotLight.h"
-
-
-
-SpotLight::SpotLight()
-{
-}
-
-
-SpotLight::~SpotLight()
-{
-}
+//#include "SpotLight.h"
+//
+//
+//
+//SpotLight::SpotLight()
+//{
+//}
+//
+//
+//SpotLight::~SpotLight()
+//{
+//}

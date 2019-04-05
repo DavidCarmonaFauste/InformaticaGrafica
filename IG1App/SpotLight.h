@@ -1,8 +1,10 @@
-#pragma once
-class SpotLight
-{
-public:
-	SpotLight();
-	~SpotLight();
-};
-
+//#pragma once
+//#include "PosLight.h"
+//
+//class SpotLight: public PosLight
+//{
+//public:
+//	SpotLight();
+//	~SpotLight();
+//};
+//
