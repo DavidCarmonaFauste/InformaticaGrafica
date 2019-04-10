@@ -19,6 +19,7 @@ public:
 		if(cont < GL_MAX_LIGHTS)
 			id = GL_LIGHT0 + cont;
 		++cont;
+    enable();
 	}
 	virtual ~Light() {
 		disable();

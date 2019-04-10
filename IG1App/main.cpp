@@ -227,7 +227,8 @@ void key(unsigned char key, int x, int y)
     scene.clear();
     glEnable(GL_TEXTURE_2D);
 	glEnable(GL_NORMALIZE);
-
+  glEnable(GL_LIGHTING);
+  glEnable(GL_NORMALIZE);
     scene.init3();
 
     glutPostRedisplay();    
