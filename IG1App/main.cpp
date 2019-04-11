@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
   // after creating the context	(los objetos de la escena)
   camera.set2D();
   camera2.set2D();
-  scene.init2();    
+  scene.init3();    
 
   glutMainLoop(); //bucle automático, no lo vamos a implementar (responde a eventos repinta)
     
@@ -223,16 +223,15 @@ void key(unsigned char key, int x, int y)
   case 'v':
 	  glDisable(GL_LIGHTING);
 	  break;
-  case '4':
+  /*case '4':
     scene.clear();
     glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
-  glEnable(GL_LIGHTING);
-  glEnable(GL_NORMALIZE);
     scene.init3();
 
     glutPostRedisplay();    
-    break;
+    break;*/
   case '3':
 	  scene.clear();
 

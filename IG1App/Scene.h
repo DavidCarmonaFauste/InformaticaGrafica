@@ -35,7 +35,7 @@ protected:
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
 	  std::vector<Texture*> grTextures;
 
-	  DirLight luzDireccional;
+	  DirLight* luzDireccional;
 };
 
 //-------------------------------------------------------------------------

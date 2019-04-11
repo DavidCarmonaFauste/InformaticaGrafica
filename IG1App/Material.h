@@ -21,6 +21,9 @@ public:
 	virtual	void upload() {
 		glShadeModel(sh);
 		glMaterialfv(face, GL_AMBIENT, glm::value_ptr(ambient));
+		glMaterialfv(face, GL_DIFFUSE, glm::value_ptr(diffuse));
+		glMaterialfv(face, GL_SPECULAR, glm::value_ptr(specular));
+		glMaterialf(face, GL_SHININESS, expF);
 	};
 };
 
