@@ -69,31 +69,46 @@ void Scene::init2()
 
 void Scene::init3()
 {
-
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+	glClearColor(0.0, 0.0, 0.05, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
+	glEnable(GL_DEPTH_TEST);  // enable Depth test
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
+	glShadeModel(GL_FLAT);
 
-  glClearColor(0.0, 0.0, 0.05, 1.0);  // background color (alpha=1 -> opaque) color de fondo de la ventana
-
+  //Materiales
   Material m;
   m.setCooper();
 
+  //Texturas
   Texture* t = new Texture();
   t->load("..\\Bmps\\lego.bmp");
   grTextures.push_back(t);
+
+
   luzDireccional = new DirLight();
   luzDireccional->enable();
   luzDireccional->setDir(fvec3(0, 0.25, 1));
   luzDireccional->setAmb(fvec4(1, 1, 1,1));
   luzDireccional->uploadLI();
   
+  luzCamara = new SpotLight();
+  luzCamara->uploadLI();
+  luzCamara->enable();
+
 
   grObjects.push_back(new EjesRGB(200.0)); //crea los ejes de la escena
   grObjects.push_back(new RectangleTexCor(500,500, 5, 5)); //crea los ejes de la escena
   grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
   grObjects.push_back(new Esfera(50, 0, 0, grTextures.front(), m)); //crea los ejes de la escena
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(0, 100, 0)));
+
+
+  esferaLuz = new EsferaLuz(50, dvec3(0, 50, 0));
+  esferaLuz->setTExture(grTextures.front());
+  esferaLuz->setMaterial(m);
+  grObjects.push_back(esferaLuz);
 }
 //------------------------------------------------------------------------
 

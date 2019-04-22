@@ -21,6 +21,12 @@ EntityMaterial::~EntityMaterial()
 {
 }
 
+Esfera::Esfera(GLdouble radio)
+{
+	qObj = gluNewQuadric();
+	radio_ = radio;
+}
+
 Esfera::Esfera(GLdouble radio, GLint x, GLint y, Texture* text, Material m)
 {
 	qObj = gluNewQuadric();

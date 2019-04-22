@@ -9,8 +9,8 @@
 #include "Entity.h"
 #include "EntityMaterial.h"
 #include "DirLight.h"
-//#include "Mesh.h"
-
+#include "SpotLight.h"
+#include "EsferaLuz.h"
 #include <vector>
 
 //-------------------------------------------------------------------------
@@ -36,6 +36,8 @@ protected:
 	  std::vector<Texture*> grTextures;
 
 	  DirLight* luzDireccional;
+	  SpotLight* luzCamara;
+	  EsferaLuz* esferaLuz;
 };
 
 //-------------------------------------------------------------------------

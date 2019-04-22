@@ -18,6 +18,7 @@ protected:
 class Esfera : public EntityMaterial
 {
 public:
+	Esfera(GLdouble radio);
 	Esfera(GLdouble radio, GLint x, GLint y, Texture* text, Material m);
 	~Esfera();
 	virtual void render(Camera const& cam);
