@@ -38,6 +38,7 @@ dvec2 mCoord;
 GLint mBot;
 
 bool cenital = false;
+bool EsferaLuzOn = false;
 
 GLint windowWidth;
 GLint windowHeight;
@@ -222,6 +223,14 @@ void key(unsigned char key, int x, int y)
 	  break;
   case 'v':
 	  glDisable(GL_LIGHTING);
+	  break;
+  case 'b':
+	  if (EsferaLuzOn)
+		scene.esferaLuz->luz->disable();
+	  else
+		 scene.esferaLuz->luz->enable();
+
+	  EsferaLuzOn = !EsferaLuzOn;
 	  break;
   /*case '4':
     scene.clear();

@@ -30,7 +30,6 @@ public:
 	void update(GLuint timeElapsed);
 
 	void clear();
-protected:
 
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
 	  std::vector<Texture*> grTextures;
