@@ -27,6 +27,11 @@ Esfera::Esfera(GLdouble radio)
 	radio_ = radio;
 }
 
+Esfera::Esfera(GLdouble radio, glm::dvec3 pos)
+{
+	Esfera::Esfera(radio);
+}
+
 Esfera::Esfera(GLdouble radio, GLint x, GLint y, Texture* text, Material m)
 {
 	qObj = gluNewQuadric();

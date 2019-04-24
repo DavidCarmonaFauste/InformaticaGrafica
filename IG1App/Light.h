@@ -16,9 +16,10 @@ protected:
 
 public:
 	Light() {
-		if(cont < GL_MAX_LIGHTS)
+		if (cont < GL_MAX_LIGHTS) {
 			id = GL_LIGHT0 + cont;
-		++cont;
+			++cont;
+		}
     enable();
 	}
 	virtual ~Light() {
@@ -27,7 +28,9 @@ public:
 	virtual void uploadLI();
 	virtual void upload(glm::dmat4 const& modelViewMat) = 0;
 	void disable() {
-		if (id < GL_LIGHT0 + GL_MAX_LIGHTS) { glDisable(id); }
+		if (id < GL_LIGHT0 + GL_MAX_LIGHTS) { 
+			glDisable(id);
+		}
 	};
 	void enable() {
 		if (id < GL_LIGHT0 + GL_MAX_LIGHTS) { glEnable(id); }

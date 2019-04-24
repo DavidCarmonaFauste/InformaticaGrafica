@@ -81,10 +81,14 @@ void Scene::init3()
   Material m;
   m.setCooper();
 
+
   //Texturas
-  Texture* t = new Texture();
-  t->load("..\\Bmps\\lego.bmp");
-  grTextures.push_back(t);
+  for (int i = 0; i < grTexturesStrings.size(); i++)
+  {
+	  Texture* t = new Texture();
+	  t->load(grTexturesStrings.at(i));
+	  grTextures.push_back(t);
+  }
 
 
   luzDireccional = new DirLight();
@@ -94,6 +98,7 @@ void Scene::init3()
   luzDireccional->uploadLI();
   
   luzCamara = new SpotLight();
+  luzCamara->setAng(1.0);
   luzCamara->uploadLI();
   luzCamara->enable();
 
@@ -101,14 +106,28 @@ void Scene::init3()
   grObjects.push_back(new EjesRGB(200.0)); //crea los ejes de la escena
   grObjects.push_back(new RectangleTexCor(500,500, 5, 5)); //crea los ejes de la escena
   grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
-  grObjects.push_back(new Esfera(50, 0, 0, grTextures.front(), m)); //crea los ejes de la escena
-  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(0, 100, 0)));
 
 
-  esferaLuz = new EsferaLuz(50, dvec3(0, 50, 0));
-  esferaLuz->setTExture(grTextures.front());
+  grObjects.push_back(new Esfera(25, 0, 0, grTextures.front(), m)); 
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(50, 100, 50)));
+
+  //MARTE
+  grObjects.push_back(new Esfera(35, 0, 0, grTextures.at(11), m)); 
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(75, 100, -50)));
+
+  //LUNA
+  grObjects.push_back(new Esfera(15, 0, 0, grTextures.at(12), m)); 
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(125, 100, -200)));
+
+  //VENUS
+  grObjects.push_back(new Esfera(60, 0, 0, grTextures.at(15), m));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-100, -100, 50)));
+
+  esferaLuz = new EsferaLuz(75, dvec3(0, 0, 0));
+  esferaLuz->setTExture(grTextures.at(14));
   esferaLuz->setMaterial(m);
   grObjects.push_back(esferaLuz);
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-50, 100, 100)));
 }
 //------------------------------------------------------------------------
 
