@@ -41,6 +41,7 @@ protected:
 	glm::dvec3* vertices = nullptr;  // vertex array	VECTOR DE 3 COMPONENTES DOUBLE
 	glm::dvec4* colors = nullptr;    // color array		VECTOR DE 3 COMPONENETES DOUBLE
 	glm::dvec2* textureData = nullptr; //Coordenadas de texturas
+	dvec3* normals = nullptr;
 };
 
 //-------------------------------------------------------------------------
