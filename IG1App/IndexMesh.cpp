@@ -23,7 +23,7 @@ void IndexMesh::render()
 			if (textureData != nullptr)
 			{
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-				glTexCoordPointer(2, GL_DOUBLE, 0, textureData);
+				glTexCoordPointer(2, GL_DOUBLE, 0, texCoords);
 			}
 			if (normals != nullptr)
 			{
@@ -61,8 +61,8 @@ IndexMesh * IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv)
 	GLdouble z = -lado / 2;
 	GLdouble x = -lado / 2;
 	
-	for (int i = 0; i < numDiv; i++) {
-		for (int j = 0; j < numDiv; j++) {
+	for (int i = 0; i < numFC; i++) {
+		for (int j = 0; j < numFC; j++) {
 			m->vertices[i * numFC + j] = glm::dvec3(x + j * incr, 0, z + i * incr);
 		}
 	}
@@ -75,13 +75,22 @@ IndexMesh * IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv)
 	m-> indices = new GLuint[m->numIndices];
 	
 	// ->
+	
 	int a = 0;
-	GLuint iv;
-
 	for (int h = 0; h < numDiv; h++) {
 		for (int k = 0; k < numDiv; k++) {
-			iv = h * numFC + k;
+			GLuint iv = h * numFC + k;
 			m->indices[a++] = iv;
+			GLuint iv2  = iv+numFC;
+			m->indices[a++] = iv2;
+			GLuint iv3 = iv + 1;
+			m->indices[a++] = iv3;
+			GLuint iv4 = iv + 1;
+			m->indices[a++] = iv4;
+			GLuint iv5 = iv + numFC;
+			m->indices[a++] = iv5;
+			GLuint iv6 = iv + numFC + 1;
+			m->indices[a++] = iv6;
 		}
 	}
 
@@ -91,9 +100,12 @@ IndexMesh * IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv)
 	int s = 0;
 	int t = 1;
 		
-	for (int b = 1; b <= numDiv; b++) {
-		for (int n = 1; n <= numDiv; n++) {
-			m->texCoords[b * numFC + n] = glm::dvec2(s + 1/b, t - 1/n);
+	GLdouble nDiv = numDiv;
+	double nFc = numFC;
+
+	for (double b = 0; b < numFC; b++) {
+		for (double n = 0; n < numFC; n++) {
+			m->texCoords[int(b * nFc + n)] = glm::dvec2(s + b/nDiv, t - n/ nDiv);
 		}
 	}
 
@@ -113,7 +125,9 @@ IndexMesh * IndexMesh::generatePlanoCurvado(GLdouble lado, GLuint numDiv, GLdoub
 		GLdouble z = m->vertices[i].z;
 
 		m->vertices[i].y = lado * curvatura / 2 - curvatura / lado * (x*x) - curvatura / lado * (z*z);
-				m->normals = new glm::dvec3[m->numVertices];
+		
+		m->normals = new glm::dvec3[m->numVertices];
+
 		m->normals[i] = glm::dvec3(2 * curvatura / lado * x, 1, 2 * curvatura / lado * z); //Excepcion aqui
 	}
 

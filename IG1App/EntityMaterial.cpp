@@ -79,7 +79,7 @@ void Superficie::render(Camera const & cam)
 {
 	if (indexMesh_ != nullptr) {
 
-		texture.bind();
+		texture_->bind(GL_MODULATE);
 		uploadMvM(cam.getViewMat());
 
 
