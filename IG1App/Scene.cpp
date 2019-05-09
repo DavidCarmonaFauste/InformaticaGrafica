@@ -131,7 +131,7 @@ void Scene::init3()
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-50, 100, 100)));
 
   //GRID (?) A saber si funciona
-  grObjects.push_back(new Superficie(300, 10, 1, grTextures.at(0), m)); //4 = BarrenReds, 7 = Desierto, 14 = Terreno, 15 = TerrenoG //m es Cooper, no se a que se refiere con Material en grises
+  grObjects.push_back(new Superficie(300, 10, 1, grTextures.at(14), m)); //4 = BarrenReds, 7 = Desierto, 14 = Terreno, 15 = TerrenoG //m es Cooper, no se a que se refiere con Material en grises
 
 }
 //------------------------------------------------------------------------

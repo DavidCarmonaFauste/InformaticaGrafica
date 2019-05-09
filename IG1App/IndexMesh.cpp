@@ -16,11 +16,11 @@ void IndexMesh::render()
 		if (vertices != nullptr) {
 			glEnableClientState(GL_VERTEX_ARRAY);
 			glVertexPointer(3, GL_DOUBLE, 0, vertices);  // number of coordinates per vertex, type of each coordinate, stride, pointer 
-			if (colors != nullptr) {
+			/*if (colors != nullptr) {
 				glEnableClientState(GL_COLOR_ARRAY);
 				glColorPointer(4, GL_DOUBLE, 0, colors);   // number of coordinates per color, type of each coordinate, stride, pointer 
-			}
-			if (textureData != nullptr)
+			}*/
+			if (texCoords != nullptr)
 			{
 				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 				glTexCoordPointer(2, GL_DOUBLE, 0, texCoords);
@@ -58,8 +58,8 @@ IndexMesh * IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv)
 	m->	vertices = new glm::dvec3[m->numVertices];
 
 	// ->
-	GLdouble z = -lado / 2;
-	GLdouble x = -lado / 2;
+	double z = -lado / 2;
+	double x = -lado / 2;
 	
 	for (int i = 0; i < numFC; i++) {
 		for (int j = 0; j < numFC; j++) {
@@ -99,17 +99,17 @@ IndexMesh * IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv)
 
 	int s = 0;
 	int t = 1;
-		
-	GLdouble nDiv = numDiv;
-	double nFc = numFC;
 
-	for (double b = 0; b < numFC; b++) {
-		for (double n = 0; n < numFC; n++) {
-			m->texCoords[int(b * nFc + n)] = glm::dvec2(s + b/nDiv, t - n/ nDiv);
+	double incrTx = 1.0 / numDiv;
+
+	for (int f = 0; f < numFC; f++) {
+
+		for (int c = 0; c < numFC; c++) {
+
+			m->texCoords[f*numFC + c] = glm::dvec2(x + c * incrTx, 1 - (z + f * incrTx));
 		}
 	}
 
-	
 	
 	return m;
 }
