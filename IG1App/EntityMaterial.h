@@ -28,3 +28,13 @@ protected:
 	GLdouble radio_;
 };
 
+class Superficie : public EntityMaterial
+{
+public:
+	Superficie(GLdouble lado, GLdouble numdiv, GLdouble curvatura, Texture* text, Material m);
+	~Superficie();
+	void render(Camera const& cam);
+protected:
+	IndexMesh* indexMesh_; //ponerlo como atributo base a Mesh?
+};
+

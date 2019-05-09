@@ -31,7 +31,7 @@ void IndexMesh::render()
 				glIndexPointer(GL_UNSIGNED_INT, 0, indices);
 			}
 
-			glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices);   // primitive graphic, first index and number of elements to be rendered
+			glDrawElements(primitive, numIndices, GL_UNSIGNED_INT, indices);  //EXCEPCIÓN AQUI
 
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 			glDisableClientState(GL_COLOR_ARRAY);
@@ -91,8 +91,8 @@ IndexMesh * IndexMesh::generateGridTex(GLdouble lado, GLuint numDiv)
 	int s = 0;
 	int t = 1;
 		
-	for (int b = 0; b < numDiv; b++) {
-		for (int n = 0; n < numDiv; n++) {
+	for (int b = 1; b <= numDiv; b++) {
+		for (int n = 1; n <= numDiv; n++) {
 			m->texCoords[b * numFC + n] = glm::dvec2(s + 1/b, t - 1/n);
 		}
 	}
@@ -106,10 +106,16 @@ IndexMesh * IndexMesh::generatePlanoCurvado(GLdouble lado, GLuint numDiv, GLdoub
 {
 	IndexMesh* m = generateGridTex(lado, numDiv);
 
-	for (int i = 0; i < m->vertices; i++)
+	for (int i = 0; i < m->numVertices; i++)
 	{
-		f(x, z) = lado * curvatura / 2 – curvatura / lado * (x*x) – curvatura / lado * (z*z);
+		GLdouble x = m->vertices[i].x;
+		GLdouble y = m->vertices[i].y;
+		GLdouble z = m->vertices[i].z;
 
-		n(x, z) = (2 * curvatura / lado * x, 1, 2 * curvatura / lado * z);
+		m->vertices[i].y = lado * curvatura / 2 - curvatura / lado * (x*x) - curvatura / lado * (z*z);
+				m->normals = new glm::dvec3[m->numVertices];
+		m->normals[i] = glm::dvec3(2 * curvatura / lado * x, 1, 2 * curvatura / lado * z); //Excepcion aqui
 	}
+
+	return m;
 }

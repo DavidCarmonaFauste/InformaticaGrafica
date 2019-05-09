@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "IndexMesh.h"
 
 using namespace glm;
 //-------------------------------------------------------------------------

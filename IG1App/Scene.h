@@ -36,7 +36,7 @@ public:
 
 	  std::vector<Entity*> grObjects;  // Entities (graphics objects) of the scene
 	  std::vector<Texture*> grTextures;
-	  std::vector<string> grTexturesStrings = { "..\\Bmps\\lego.bmp", "..\\Bmps\\baldosaC.bmp", "..\\Bmps\\baldosaF.bmp", "..\\Bmps\\baldosaP.bmp", "..\\Bmps\\BarrenReds.bmp", "..\\Bmps\\container.bmp", "..\\Bmps\\cristalTri.bmp", "..\\Bmps\\desierto.bmp", "..\\Bmps\\earth.bmp", "..\\Bmps\\grass.bmp", "..\\Bmps\\lego.bmp", "..\\Bmps\\mars.bmp", "..\\Bmps\\moon.bmp", "..\\Bmps\\papelE.bmp", "..\\Bmps\\sun.bmp", "..\\Bmps\\terreno.bmp", "..\\Bmps\\terrenoG.bmp", "..\\Bmps\\window.bmp", "..\\Bmps\\Zelda.bmp" };
+	  std::vector<string> grTexturesStrings = { "..\\Bmps\\lego.bmp", "..\\Bmps\\baldosaC.bmp", "..\\Bmps\\baldosaF.bmp", "..\\Bmps\\baldosaP.bmp", "..\\Bmps\\BarrenReds.bmp", "..\\Bmps\\container.bmp", "..\\Bmps\\cristalTri.bmp", "..\\Bmps\\desierto.bmp", "..\\Bmps\\earth.bmp", "..\\Bmps\\grass.bmp", "..\\Bmps\\mars.bmp", "..\\Bmps\\moon.bmp", "..\\Bmps\\papelE.bmp", "..\\Bmps\\sun.bmp", "..\\Bmps\\terreno.bmp", "..\\Bmps\\terrenoG.bmp", "..\\Bmps\\window.bmp", "..\\Bmps\\Zelda.bmp" };
 
 	  DirLight* luzDireccional;
 	  SpotLight* luzCamara;

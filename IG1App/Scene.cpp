@@ -113,15 +113,15 @@ void Scene::init3()
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(50, 100, 50)));
 
   //MARTE
-  grObjects.push_back(new Esfera(35, 0, 0, grTextures.at(11), m)); 
+  grObjects.push_back(new Esfera(35, 0, 0, grTextures.at(10), m)); 
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(75, 100, -50)));
 
   //LUNA
-  grObjects.push_back(new Esfera(15, 0, 0, grTextures.at(12), m)); 
+  grObjects.push_back(new Esfera(15, 0, 0, grTextures.at(11), m)); 
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(125, 100, -200)));
 
   //VENUS
-  grObjects.push_back(new Esfera(60, 0, 0, grTextures.at(15), m));
+  grObjects.push_back(new Esfera(60, 0, 0, grTextures.at(14), m));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-100, -100, 50)));
 
   esferaLuz = new EsferaLuz(75, dvec3(0, 0, 0));
@@ -129,6 +129,10 @@ void Scene::init3()
   esferaLuz->setMaterial(m);
   grObjects.push_back(esferaLuz);
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-50, 100, 100)));
+
+  //GRID (?) A saber si funciona
+  grObjects.push_back(new Superficie(50, 10, 20, grTextures.at(4), m)); //4 = BarrenReds, 7 = Desierto, 14 = Terreno, 15 = TerrenoG //m es Cooper, no se a que se refiere con Material en grises
+
 }
 //------------------------------------------------------------------------
 

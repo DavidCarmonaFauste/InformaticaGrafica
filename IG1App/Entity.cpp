@@ -578,4 +578,3 @@ void Planta::render(Camera const & cam)
 		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
 	}
 }
-

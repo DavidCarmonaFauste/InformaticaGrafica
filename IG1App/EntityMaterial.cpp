@@ -62,3 +62,40 @@ void Esfera::render(Camera const & cam)
 	//gluQuadricOrientation(qObj, GLU_OUTSIDE);
 }
 
+Superficie::Superficie(GLdouble lado, GLdouble numdiv, GLdouble curvatura, Texture* text, Material m)
+{
+	indexMesh_ = IndexMesh::generatePlanoCurvado(lado, numdiv, curvatura);
+	texture_ = text;
+	material_ = m;
+
+}
+
+Superficie::~Superficie()
+{
+	delete indexMesh_;
+}
+
+void Superficie::render(Camera const & cam)
+{
+	if (indexMesh_ != nullptr) {
+
+		texture.bind();
+		uploadMvM(cam.getViewMat());
+
+
+		/*this->setModelMat(rotate(this->getModelMat(), radians(-90.0), dvec3(0, 1, 0)));
+		uploadMvM(cam.getViewMat());
+		this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(0, 1, 0)));*/
+
+
+		indexMesh_->render();
+
+		//this->setModelMat(translate(this->getModelMat(), dvec3(0, l_ / 2, 0)));
+		//glColor3d(0.0, 0.0, 1.0);
+		glLineWidth(2);
+
+		//this->setModelMat(translate(this->getModelMat(), dvec3(0, -l_ / 2, 0)));
+		//this->setModelMat(rotate(this->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+		//this->setModelMat(translate(this->getModelMat(), dvec3(-100, 50, -30)));
+	}
+}
