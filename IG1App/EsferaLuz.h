@@ -5,8 +5,9 @@
 class EsferaLuz: public Esfera
 {
 public:
-	EsferaLuz(GLuint radius, glm::dvec3 pos);
+	EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos);
 	~EsferaLuz();
 
 	SpotLight* luz;
+	Esfera* sphere;
 };

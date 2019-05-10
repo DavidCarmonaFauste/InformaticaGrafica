@@ -38,9 +38,6 @@ dvec2 mCoord;
 GLint mBot;
 
 bool cenital = false;
-bool EsferaLuzOn = true;
-bool CameraLuzOn = true;
-bool DireccionLuzOn = true;
 
 GLint windowWidth;
 GLint windowHeight;
@@ -221,28 +218,28 @@ void key(unsigned char key, int x, int y)
     cenital = !cenital;
     break;
   case 'c':
-	  if (CameraLuzOn)
+	  if (scene.CameraLuzOn)
 		  scene.luzCamara->disable();
 	  else
 		  scene.luzCamara->enable();
 
-	  CameraLuzOn = !CameraLuzOn;
+	  scene.CameraLuzOn = !scene.CameraLuzOn;
 	  break;
   case 'v':
-	  if (DireccionLuzOn)
+	  if (scene.DireccionLuzOn)
 		  scene.luzDireccional->disable();
 	  else
 		  scene.luzDireccional->enable();
 
-	  DireccionLuzOn = !DireccionLuzOn;
+	  scene.DireccionLuzOn = !scene.DireccionLuzOn;
 	  break;
   case 'b':
-	  if (EsferaLuzOn)
+	  if (scene.EsferaLuzOn)
 		scene.esferaLuz->luz->disable();
 	  else
 		 scene.esferaLuz->luz->enable();
 
-	  EsferaLuzOn = !EsferaLuzOn;
+	  scene.EsferaLuzOn = !scene.EsferaLuzOn;
 	  break;
   /*case '4':
     scene.clear();

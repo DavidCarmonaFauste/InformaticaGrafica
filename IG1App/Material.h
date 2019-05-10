@@ -18,6 +18,7 @@ class Material
 
 public:
 	void setCooper();
+	void setSilver();
 	virtual	void upload() {
 		glShadeModel(sh);
 		glMaterialfv(face, GL_AMBIENT, glm::value_ptr(ambient));

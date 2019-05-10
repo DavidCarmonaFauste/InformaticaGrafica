@@ -78,9 +78,10 @@ void Scene::init3()
 	glShadeModel(GL_FLAT);
 
   //Materiales
-  Material m;
-  m.setCooper();
-
+  Material cooper;
+  cooper.setCooper();
+  Material silver;
+  silver.setSilver();
 
   //Texturas
   for (int i = 0; i < grTexturesStrings.size(); i++)
@@ -105,33 +106,34 @@ void Scene::init3()
 
 
   grObjects.push_back(new EjesRGB(200.0)); //crea los ejes de la escena
-  grObjects.push_back(new RectangleTexCor(500,500, 5, 5)); //crea los ejes de la escena
-  grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
+  //grObjects.push_back(new RectangleTexCor(500,500, 5, 5)); //crea los ejes de la escena
+  //grObjects.back()->setModelMat(rotate(grObjects.back()->getModelMat(), radians(90.0), dvec3(1, 0, 0)));
 
 
-  grObjects.push_back(new Esfera(25, 0, 0, grTextures.front(), m)); 
+  grObjects.push_back(new Esfera(25, 0, 0, grTextures.front(), silver)); 
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(50, 100, 50)));
 
   //MARTE
-  grObjects.push_back(new Esfera(35, 0, 0, grTextures.at(10), m)); 
+  grObjects.push_back(new Esfera(35, 0, 0, grTextures.at(10), silver));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(75, 100, -50)));
 
   //LUNA
-  grObjects.push_back(new Esfera(15, 0, 0, grTextures.at(11), m)); 
+  grObjects.push_back(new Esfera(15, 0, 0, grTextures.at(11), silver));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(125, 100, -200)));
 
   //VENUS
-  grObjects.push_back(new Esfera(60, 0, 0, grTextures.at(14), m));
-  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-100, -100, 50)));
+  grObjects.push_back(new Esfera(60, 0, 0, grTextures.at(14), silver));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-100, 150, 50)));
 
-  esferaLuz = new EsferaLuz(75, dvec3(0, 0, 0));
-  esferaLuz->setTExture(grTextures.at(14));
-  esferaLuz->setMaterial(m);
+  esferaLuz = new EsferaLuz(25, 75, dvec3(0, 0, 0));
+  esferaLuz->setTExture(grTextures.at(7));
+  esferaLuz->setMaterial(silver);
   grObjects.push_back(esferaLuz);
-  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-50, 100, 100)));
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-50, 300, 100)));
 
   //GRID (?) A saber si funciona
-  grObjects.push_back(new Superficie(300, 10, 1, grTextures.at(14), m)); //4 = BarrenReds, 7 = Desierto, 14 = Terreno, 15 = TerrenoG //m es Cooper, no se a que se refiere con Material en grises
+  grObjects.push_back(new Superficie(800, 20, 0.5, grTextures.at(15), silver)); //4 = BarrenReds, 7 = Desierto, 14 = Terreno, 15 = TerrenoG //m es Cooper, no se a que se refiere con Material en grises
+  grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-0, -300, 0)));
 
 }
 //------------------------------------------------------------------------
@@ -148,8 +150,20 @@ Scene::~Scene()
 
 void Scene::render(Camera const& cam)
 {
-	if (luzDireccional != nullptr)
-	luzDireccional->upload(cam.getViewMat());
+	if (EsferaLuzOn)
+	esferaLuz->luz->upload(cam.getViewMat());
+
+	if (CameraLuzOn)
+	{
+		luzCamara->setPos(cam.GetPos());
+		luzCamara->setDir(cam.GetFront());
+		luzCamara->upload(cam.getViewMat());
+	}
+
+	if (DireccionLuzOn)
+	{
+		luzDireccional->upload(cam.getViewMat());
+	}
 
 	for (Entity* el: grObjects)
 	{

@@ -1,6 +1,6 @@
 #include "EsferaLuz.h"
 
-EsferaLuz::EsferaLuz(GLuint radius, glm::dvec3 pos): Esfera(radius)
+EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos): Esfera(radius)
 {
 	luz = new SpotLight();
 	luz->setDir(fvec3(0, -1, 0));
@@ -8,6 +8,7 @@ EsferaLuz::EsferaLuz(GLuint radius, glm::dvec3 pos): Esfera(radius)
 	luz->setAng(180.0);
 	luz->uploadLI();
 	luz->enable();
+	sphere = new Esfera(radius2);
 }
 
 EsferaLuz::~EsferaLuz()

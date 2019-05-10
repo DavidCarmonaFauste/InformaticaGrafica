@@ -54,6 +54,10 @@ public:
 
   void topView();
 
+  glm::dvec3 const& GetPos() const { return  eye; };
+  glm::dvec3 const& GetFront() const { return front; };
+  glm::dvec3 const& getLook() const { return look;};
+
 protected:
 	
 	glm::dmat4 viewMat;    // view matrix = inverse of modeling matrix

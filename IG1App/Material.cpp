@@ -10,3 +10,12 @@ void Material::setCooper()
 
 	expF = 12.8;
 }
+
+void Material::setSilver()
+{
+	ambient = glm::fvec4(0.19225, 0.19225, 0.19225, 1);
+	diffuse = glm::fvec4(0.50754, 0.50754, 0.50754, 1);
+	specular = glm::fvec4(0.508273, 0.508273, 0.508273, 1);
+
+	expF = 51.2;
+}

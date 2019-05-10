@@ -41,6 +41,10 @@ public:
 	  DirLight* luzDireccional;
 	  SpotLight* luzCamara;
 	  EsferaLuz* esferaLuz;
+
+	  bool EsferaLuzOn = true;
+	  bool CameraLuzOn = true;
+	  bool DireccionLuzOn = true;
 };
 
 //-------------------------------------------------------------------------
