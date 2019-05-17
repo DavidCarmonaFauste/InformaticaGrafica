@@ -125,13 +125,17 @@ void Scene::init3()
   grObjects.push_back(new Esfera(60, 0, 0, grTextures.at(14), silver));
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-100, 150, 50)));
 
-  esferaLuz = new EsferaLuz(25, 75, dvec3(0, 0, 0));
+
+
+  esferaLuz = new EsferaLuz(25, 50, dvec3(0, -100, 0), dvec3(-100 / 2, 100 / 2, -100));
   esferaLuz->setTExture(grTextures.at(7));
   esferaLuz->setMaterial(silver);
+  esferaLuz->setTexture2(grTextures.at(8));
+  esferaLuz->setMaterial2(cooper);
   grObjects.push_back(esferaLuz);
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-50, 300, 100)));
 
-  //GRID (?) A saber si funciona
+  //GRID
   grObjects.push_back(new Superficie(800, 20, 0.5, grTextures.at(15), silver)); //4 = BarrenReds, 7 = Desierto, 14 = Terreno, 15 = TerrenoG //m es Cooper, no se a que se refiere con Material en grises
   grObjects.back()->setModelMat(translate(grObjects.back()->getModelMat(), dvec3(-0, -300, 0)));
 
@@ -152,6 +156,9 @@ void Scene::render(Camera const& cam)
 {
 	if (EsferaLuzOn)
 	esferaLuz->luz->upload(cam.getViewMat());
+
+	esferaLuz->uploadLight(cam.getViewMat() * esferaLuz->getModelMat());
+
 
 	if (CameraLuzOn)
 	{

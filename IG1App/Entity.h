@@ -26,7 +26,7 @@ public:
 	// modeling matrix
 	glm::dmat4 const& getModelMat() const { return modelMat; };
 
-	void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
+	virtual void setModelMat(glm::dmat4 const& aMat) { modelMat = aMat; }
   
 protected:
 
