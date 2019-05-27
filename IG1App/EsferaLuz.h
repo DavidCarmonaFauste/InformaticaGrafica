@@ -30,6 +30,8 @@ public:
 	GLint DireccionRotacion = 1;
 	GLint topeAngulo = 45;
 
+
+
 	dmat4 MatRelativa;
 	dmat4 MatUpdate;
 	dmat4 mat1;
