@@ -7,7 +7,7 @@ protected:
 	glm::fvec4 spotDir = { 0.0, -1.0, 0.0, 0 };
 
 	double exponent = 0.1;
-	double angle = 20;
+	double angle = 45;
 
 public:
 	SpotLight() : PosLight() {  };
