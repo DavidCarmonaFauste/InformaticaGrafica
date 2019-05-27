@@ -1,6 +1,6 @@
 #include "EsferaLuz.h"
 
-EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos, glm::dvec3 relativePos): Esfera(radius)
+EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos, glm::dvec3 relativePos) : Esfera(radius)
 {
 
 	qObj2 = gluNewQuadric();
@@ -13,6 +13,7 @@ EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos, glm::dvec3 r
 
 	luz = new SpotLight();
 	luz->setDir(fvec3(0, -1, 0));
+	luz->setAng(5.0);
 	luz->setExp(5.0);
 	luz->enable();
 }
@@ -61,6 +62,9 @@ void EsferaLuz::render(Camera const & cam)
 
 		modelMat = originalMat;
 
+		uploadLight(cam.getViewMat() * getModelMat());
+
+
 		glDisable(GL_CULL_FACE);
 	}
 }
@@ -68,7 +72,7 @@ void EsferaLuz::render(Camera const & cam)
 void EsferaLuz::setTexture2(Texture * tex)
 {
 	texture2 = tex;
-}	
+}
 
 void EsferaLuz::setMaterial2(Material mat)
 {
@@ -77,42 +81,30 @@ void EsferaLuz::setMaterial2(Material mat)
 
 void EsferaLuz::update()
 {
-	AnguloUpdate += 1;
+	AnguloUpdate += 0.01;
 	if (AnguloUpdate >= 360)
 		AnguloUpdate -= 360;
 
-	
-
-
-	//AnguloRotacion += 0.5 * DireccionRotacion;
-	//if (AnguloRotacion >= topeAngulo) {
-	//	AnguloRotacion = topeAngulo;
-	//	DireccionRotacion = -1;
-	//}
-	//else if (AnguloRotacion <= -topeAngulo) {
-	//	AnguloRotacion = -topeAngulo;
-	//	DireccionRotacion = 1;
-	//}
-
-
+	AnguloRotacion += 0.5 * DireccionRotacion;
+	if (AnguloRotacion >= topeAngulo) {
+		AnguloRotacion = topeAngulo;
+		DireccionRotacion = -1;
+	}
+	else if (AnguloRotacion <= -topeAngulo) {
+		AnguloRotacion = -topeAngulo;
+		DireccionRotacion = 1;
+	}
 }
 
 void EsferaLuz::uploadLight(dmat4 camMat)
 {
-	//GLdouble Dato1 = radio2;
-	//GLdouble Dato2 = sqrt(4 * 3.14 * radio2 * radio2) / 2;
 
-	GLdouble a = 1 / 2 * 2000;
-	GLdouble b = 200;
-	GLdouble c = -a;
+	GLdouble a = radio2 * radio2 / 8; //es lo que mejor cubre el grid, de las que he probado, hay que centrarlo
+	GLdouble b = radio2;
 
-	dvec3 T = dvec3(a * cos(AnguloUpdate), c * sin(AnguloUpdate)  * sin(AnguloUpdate), c * sin(AnguloUpdate) * cos(AnguloUpdate));
+	dmat4 updateMat = translate(modelMat, dvec3(a * cos(AnguloUpdate), b * sin(AnguloUpdate) * sin(AnguloUpdate), -a * sin(AnguloUpdate) * cos(AnguloUpdate)));
 
-	//dmat4 updateMat = translate(modelMat, dvec3(Dato2 * cos(AnguloUpdate), Dato1 * sin(AnguloUpdate) * sin(AnguloUpdate), -Dato2 * sin(AnguloUpdate) * cos(AnguloUpdate)));
-
-	dmat4 updateMat = translate(modelMat, T);
-
-	mat1 = rotate(updateMat * MatRelativa, radians(AnguloRotacion), dvec3(0, 1.0, 0)) / (updateMat * MatRelativa) * updateMat;
+	mat1 = rotate(updateMat * MatRelativa, radians(AnguloRotacion), dvec3(1.0, 1.0, 1.0)) / (updateMat * MatRelativa) * updateMat;
 	mat2 = updateMat * MatRelativa;
 
 	luz->upload(camMat * mat1);
