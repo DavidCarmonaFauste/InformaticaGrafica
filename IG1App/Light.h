@@ -27,6 +27,7 @@ public:
 	}
 	virtual void uploadLI();
 	virtual void upload(glm::dmat4 const& modelViewMat) = 0;
+	
 	void disable() {
 		if (id < GL_LIGHT0 + GL_MAX_LIGHTS) { 
 			glDisable(id);

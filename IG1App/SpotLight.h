@@ -23,9 +23,9 @@ public:
 	}
 
 	virtual void setDir(glm::fvec3 dir) { spotDir = glm::fvec4(dir, 0.0); }
-	virtual void setExp(double exp) { glLightf(id, GL_SPOT_EXPONENT, exp); }
+	virtual void setExp(double exp) { exponent = exp; }
 	virtual void setAng(double ang) { 
-		(id, GL_SPOT_CUTOFF, ang);
+		angle = ang;
 	}
 	~SpotLight() {}
 };

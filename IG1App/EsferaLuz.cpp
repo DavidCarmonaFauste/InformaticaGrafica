@@ -13,7 +13,7 @@ EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos, glm::dvec3 r
 
 	luz = new SpotLight();
 	luz->setDir(fvec3(0, -1, 0));
-	luz->setAng(5.0);
+	luz->setAng(20.0);
 	luz->setExp(0.5);
 	luz->uploadLI();
 	luz->enable();
