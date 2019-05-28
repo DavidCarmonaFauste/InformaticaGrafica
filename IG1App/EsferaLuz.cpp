@@ -14,7 +14,7 @@ EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos, glm::dvec3 r
 	luz = new SpotLight();
 	luz->setDir(fvec3(0, -1, 0));
 	luz->setExp(5.0);
-	luz->setAng(20.0);
+	luz->setAng(5.0);
 	luz->enable();
 }
 
@@ -62,9 +62,6 @@ void EsferaLuz::render(Camera const & cam)
 
 		modelMat = originalMat;
 
-		uploadLight(cam.getViewMat() * getModelMat());
-
-
 		glDisable(GL_CULL_FACE);
 	}
 }
@@ -79,7 +76,7 @@ void EsferaLuz::setMaterial2(Material mat)
 	material2 = mat;
 }
 
-void EsferaLuz::update()
+void EsferaLuz::update() //animacion del movimiento de la esfera pequeñita, y actualizacion de angulos
 {
 	AnguloUpdate += 0.01;
 	if (AnguloUpdate >= 360)
@@ -96,16 +93,16 @@ void EsferaLuz::update()
 	}
 }
 
-void EsferaLuz::uploadLight(dmat4 camMat)
+void EsferaLuz::uploadLight(dmat4 camMat) //actualiza las matrices a renderizar, y actualiza la luz
 {
 
-	GLdouble a = radio2 * radio2 / 8; //es lo que mejor cubre el grid, de las que he probado, hay que centrarlo
-	GLdouble b = radio2;
+	GLdouble a = 400; //800 el lado de la superficie, asi que 400
+	GLdouble b = radio2; //1/2 altura del objeto, asi la mitad del radio
 
-	dmat4 updateMat = translate(modelMat, dvec3(a * cos(AnguloUpdate), b * sin(AnguloUpdate) * sin(AnguloUpdate), -a * sin(AnguloUpdate) * cos(AnguloUpdate)));
+	dmat4 updateMat = translate(modelMat, dvec3(a * cos(AnguloUpdate), b * sin(AnguloUpdate) * sin(AnguloUpdate), -a * sin(AnguloUpdate) * cos(AnguloUpdate))); //formulita
 
-	mat1 = rotate(updateMat * MatRelativa, radians(AnguloRotacion), dvec3(1.0, 1.0, 1.0)) / (updateMat * MatRelativa) * updateMat;
+	mat1 = rotate(updateMat * MatRelativa, radians(AnguloRotacion), dvec3(1.0, 1.0, 1.0)) / (updateMat * MatRelativa) * updateMat; //posiciones relativas
 	mat2 = updateMat * MatRelativa;
 
-	luz->upload(camMat * mat1);
+	luz->upload(camMat * mat1); //actualizar luz
 }

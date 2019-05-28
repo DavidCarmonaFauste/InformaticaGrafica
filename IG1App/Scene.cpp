@@ -155,10 +155,7 @@ Scene::~Scene()
 void Scene::render(Camera const& cam)
 {
 	if (EsferaLuzOn)
-	esferaLuz->luz->upload(cam.getViewMat());
-
-	//esferaLuz->uploadLight(cam.getViewMat() * esferaLuz->getModelMat());
-
+		esferaLuz->uploadLight(cam.getViewMat());
 
 	if (CameraLuzOn)
 	{
