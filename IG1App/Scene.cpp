@@ -99,7 +99,7 @@ void Scene::init3()
   luzDireccional->uploadLI();
   
   luzCamara = new SpotLight();
-  luzCamara->setAng(20.0);
+  luzCamara->setAng(5.0);
   luzCamara->setExp(2);
   luzCamara->uploadLI();
   luzCamara->enable();
