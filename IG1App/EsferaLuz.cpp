@@ -17,6 +17,7 @@ EsferaLuz::EsferaLuz(GLuint radius, GLuint radius2, glm::dvec3 pos, glm::dvec3 r
 	luz->setExp(0.5);
 	luz->uploadLI();
 	luz->enable();
+	update(); //para que este visible desde el principio
 }
 
 EsferaLuz::~EsferaLuz()
@@ -77,7 +78,7 @@ void EsferaLuz::setMaterial2(Material mat)
 	material2 = mat;
 }
 
-void EsferaLuz::update() //animacion del movimiento de la esfera pequeñita, y actualizacion de angulos
+void EsferaLuz::update() //animacion del movimiento de la esfera pequeñita, y actualizacion de angulos y las matrices a renderizar
 {
 	AnguloUpdate += 0.01;
 	if (AnguloUpdate >= 360)
@@ -92,10 +93,6 @@ void EsferaLuz::update() //animacion del movimiento de la esfera pequeñita, y ac
 		AnguloRotacion = -topeAngulo;
 		DireccionRotacion = 1;
 	}
-}
-
-void EsferaLuz::uploadLight(dmat4 camMat) //actualiza las matrices a renderizar, y actualiza la luz
-{
 
 	GLdouble a = 400; //800 el lado de la superficie, asi que 400
 	GLdouble b = radio2; //1/2 altura del objeto, asi la mitad del radio
@@ -104,6 +101,9 @@ void EsferaLuz::uploadLight(dmat4 camMat) //actualiza las matrices a renderizar,
 
 	mat1 = rotate(updateMat * MatRelativa, radians(AnguloRotacion), dvec3(1.0, 1.0, 1.0)) / (updateMat * MatRelativa) * updateMat; //posiciones relativas
 	mat2 = updateMat * MatRelativa;
+}
 
+void EsferaLuz::uploadLight(dmat4 camMat) //actualiza la luz
+{
 	luz->upload(camMat * mat1); //actualizar luz
 }
